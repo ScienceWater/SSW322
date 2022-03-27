@@ -18,10 +18,12 @@ export default function LoginScreen({ navigation }: ScreenProps) {
     <>
     <StatusBar style="light" />
     <View style={styles.container}>
+    
+    
       <Text>Login</Text>
       <TextInput style={styles.textInput} placeholder='Email'  onChangeText={setEmail} />
       <TextInput style={styles.textInput} placeholder='Password' secureTextEntry onChangeText={setPassword} />
-      <MyButton type="primary" text="Login" size="large" onPressFn={logInWithEmail}/>
+      <MyButton type="primary" text="Login" size="medium" onPressFn={logInWithEmail}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
     </View>
     </>
@@ -37,9 +39,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    backgroundColor: '#dfdfdf',
+    width: "75%",
     marginBottom: 10, 
-    borderRadius: 30,
+    borderBottomColor: "#3A3A3A",
+    borderBottomWidth: 1,
     padding: 10
-  }
+  },
 });

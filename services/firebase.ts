@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmail
 import { getFirestore, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import Constants from 'expo-constants';
 
+
 const firebaseConfig = {
     apiKey: Constants.manifest?.extra?.firebaseApiKey,
     authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
@@ -36,11 +37,13 @@ export const signUpWithEmail = async (fName: string, lName: string, email: strin
 }
 
 export const logInWithEmail = async (email: string, password: string) => {
+  
     try {
         let result = await signInWithEmailAndPassword(auth, email, password);
         user = result.user;
         return 'success'
     } catch (e) {
+      
         console.log(e);
         return e;
     }

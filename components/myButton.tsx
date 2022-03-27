@@ -41,17 +41,17 @@ export default MyButton;
 
 const styles = StyleSheet.create({
     primaryContainer: {
-        backgroundColor: '#133C55',
+        backgroundColor: '#A32638',
         paddingHorizontal: 32,
         paddingVertical: 12,
         width: 150,
-        borderRadius: 32,
-        borderColor: '#133C55',
+        borderRadius: 15,
+        borderColor: '#A32638',
         borderWidth: 2,
     },
     primaryText: {
         color: 'white',
-        fontWeight: 'bold',
+        fontWeight: '400',
         textAlign: 'center',
         fontSize: 16
     },
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
     },
     mediumContainer: {
         paddingHorizontal: 32,
-        paddingVertical: 8,
-        width: 150,
-        borderRadius: 32,
+        paddingVertical: 12,
+        width: "75%",
+        borderRadius: 15,
         borderWidth: 2,
     },
     mediumText: {
-        fontSize: 16
+        fontSize: 18
     },
     largeContainer: {
         paddingHorizontal: 48,

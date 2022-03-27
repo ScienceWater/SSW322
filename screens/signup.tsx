@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }: ScreenProps) {
       <TextInput style={styles.textInput} placeholder='Last Name' onChangeText={setlName} />
       <TextInput style={styles.textInput} placeholder='Email'  onChangeText={setEmail} />
       <TextInput style={styles.textInput} placeholder='Password' secureTextEntry onChangeText={setPassword} />
-      <MyButton style={styles.textInput} type="primary" text="Signup" size="medium" onPressFn={signUpWithEmail}/>
+      <MyButton  type="primary" text="Signup" size="medium" onPressFn={signUpWithEmail}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
       <Text>Don't have an account? <MyButton  text="Login" onPressFn={() => navigation.navigate("Login")}/></Text>
     </View>
@@ -42,9 +42,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    backgroundColor: '#dfdfdf',
+    width: "75%",
     marginBottom: 10, 
-    borderRadius: 30,
+    borderBottomColor: "#3A3A3A",
+    borderBottomWidth: 1,
     padding: 10
-  }
+  },
+  
 });
