@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
-import { logInWithEmail } from '../services/firebase';
+import { logInWithEmail , getFirstName} from '../services/firebase';
 
 type ScreenProps = {
   navigation: any
@@ -11,9 +11,6 @@ type ScreenProps = {
 export default function LoginScreen({ navigation }: ScreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  logInWithEmail(email, password);
-
   return (
     <>
     <StatusBar style="light" />
@@ -23,7 +20,17 @@ export default function LoginScreen({ navigation }: ScreenProps) {
       <Text>Login</Text>
       <TextInput style={styles.textInput} placeholder='Email'  onChangeText={setEmail} />
       <TextInput style={styles.textInput} placeholder='Password' secureTextEntry onChangeText={setPassword} />
-      <MyButton type="primary" text="Login" size="medium" onPressFn={logInWithEmail}/>
+
+
+      <MyButton text="Log In" type="primary" size="large" onPressFn={async () => {
+          let result = await logInWithEmail(email, password);
+          if (result === 'success') {
+            let firstName = await getFirstName();
+            navigation.navigate("Home", {firstName: firstName});
+          }
+      }}/>
+   
+
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
     </View>
     </>

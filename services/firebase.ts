@@ -32,18 +32,17 @@ export const signUpWithEmail = async (fName: string, lName: string, email: strin
         return 'success'
     } catch (e) {
         console.log(e);
+       
         return e;
     }
 }
 
 export const logInWithEmail = async (email: string, password: string) => {
-  
     try {
         let result = await signInWithEmailAndPassword(auth, email, password);
         user = result.user;
         return 'success'
     } catch (e) {
-      
         console.log(e);
         return e;
     }
