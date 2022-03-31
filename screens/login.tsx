@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
+import { StyleSheet, View, Dimensions, Text} from 'react-native';
+import { TextInput } from 'react-native-paper';
+
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
 import { logInWithEmail , getFirstName} from '../services/firebase';
@@ -15,13 +17,9 @@ export default function LoginScreen({ navigation }: ScreenProps) {
     <>
     <StatusBar style="light" />
     <View style={styles.container}>
-    
-    
-      <Text>Login</Text>
-      <TextInput style={styles.textInput} placeholder='Email'  onChangeText={setEmail} />
-      <TextInput style={styles.textInput} placeholder='Password' secureTextEntry onChangeText={setPassword} />
-
-
+  
+      <TextInput style={styles.textInput}label="Email" activeUnderlineColor="#A32638" value={email} onChangeText={(text) => setEmail(text)} />
+      <TextInput style={styles.textInput}  secureTextEntry label="Password" activeUnderlineColor="#A32638" value={password} onChangeText={(text) => setPassword(text)} />
       <MyButton text="Log In" type="primary" size="large" onPressFn={async () => {
           let result = await logInWithEmail(email, password);
           if (result === 'success') {
@@ -44,12 +42,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
   textInput: {
-    height: 40,
-    width: "75%",
-    marginBottom: 10, 
-    borderBottomColor: "#3A3A3A",
-    borderBottomWidth: 1,
-    padding: 10
+   
+    color: "#A32638",
+   
+    width: "80%",
+    marginBottom: 15, 
+
+    backgroundColor: "transparent",
+  
+    padding: 5
   },
 });

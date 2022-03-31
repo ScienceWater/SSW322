@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
+import { StyleSheet, View, Dimensions, Text} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
-import { signUpWithEmail } from '../services/firebase';
+import { signUpWithEmail, getFirstName } from '../services/firebase';
+import { TextInput } from 'react-native-paper';
+
 
 type ScreenProps = {
   navigation: any
@@ -14,18 +16,21 @@ export default function LoginScreen({ navigation }: ScreenProps) {
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
 
-  signUpWithEmail(fName, lName, email, password);
-
   return (
     <>
     <StatusBar style="light" />
     <View style={styles.container}>
-      <Text>Signup</Text>
-      <TextInput style={styles.textInput} placeholder='First Name' onChangeText={setfName} />
-      <TextInput style={styles.textInput} placeholder='Last Name' onChangeText={setlName} />
-      <TextInput style={styles.textInput} placeholder='Email'  onChangeText={setEmail} />
-      <TextInput style={styles.textInput} placeholder='Password' secureTextEntry onChangeText={setPassword} />
-      <MyButton  type="primary" text="Signup" size="medium" onPressFn={signUpWithEmail}/>
+      <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='First Name' onChangeText={setfName} />
+      <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Last Name' onChangeText={setlName} />
+      <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Email'  onChangeText={setEmail} />
+      <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Password' secureTextEntry onChangeText={setPassword} />
+      <MyButton  type="primary" text="Signup" size="medium" onPressFn={async () => {
+          let result = await signUpWithEmail(fName, lName, email, password);
+          if (result === 'success') {
+            let firstName = await getFirstName();
+            navigation.navigate("Home", {firstName: firstName});
+          }
+        }}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
       <Text>Don't have an account? <MyButton  text="Login" onPressFn={() => navigation.navigate("Login")}/></Text>
     </View>
@@ -41,12 +46,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput: {
-    height: 40,
-    width: "75%",
+  
+    width: "80%",
     marginBottom: 10, 
-    borderBottomColor: "#3A3A3A",
-    borderBottomWidth: 1,
-    padding: 10
+    backgroundColor: "transparent",
+
+    padding: 5
   },
   
 });

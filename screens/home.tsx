@@ -1,32 +1,50 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { BottomNavigation} from 'react-native-paper';
 
-
+const MusicRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
+const AlbumsRoute = () => <Text>Cart goes here</Text>;
+const RecentsRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
   navigation: any
   route: any
 }
 
-export default function HomeScreen({ navigation, route }: ScreenProps) {
-  return(
+const HomeScreen = ({ navigation, route }: ScreenProps) => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'home', title: 'Home', icon: 'home' },
+    { key: 'cart', title: 'Cart', icon: 'cart' },
+    { key: 'account', title: 'Account', icon: 'account' },
+  ]);
+
+  const renderScene = BottomNavigation.SceneMap({
+    home: MusicRoute,
+    cart: AlbumsRoute,
+    account: RecentsRoute,
+  });
+
+  return (
     <>
-    <StatusBar style="light" />
-    <View style={styles.container}>
-      <Text>Hi, {route.params.firstName}</Text>
-     
-    </View>
+    <Text>Hi, {route.params.firstName}</Text>
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+      barStyle={{ backgroundColor: '#A32638' }}
+    />
     </>
-  )
-}
+  );
+};
+
+export default HomeScreen;
+
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   textInput: {
     height: 40,

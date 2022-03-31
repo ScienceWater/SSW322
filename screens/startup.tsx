@@ -16,7 +16,7 @@ export default function StartUpScreen({ navigation }: ScreenProps) {
           <View style={styles.fixToText}>
             <MyButton type="primary" text="Login" size="large" onPressFn={() => navigation.navigate("Login")}/>
             <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
-            <MyButton type="secondary" text="Sign Up" size="large" onPressFn={() => navigation.navigate("Signup")}/>
+            <MyButton type="secondary" text="Signup" size="large" onPressFn={() => navigation.navigate("Signup")}/>
           </View>
         </View>
     );

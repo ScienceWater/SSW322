@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#A32638',
         paddingHorizontal: 32,
         paddingVertical: 12,
-        width: 150,
+        width: "80%",
         borderRadius: 15,
         borderColor: '#A32638',
         borderWidth: 2,
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     mediumContainer: {
         paddingHorizontal: 32,
         paddingVertical: 12,
-        width: "75%",
-        borderRadius: 15,
+        width: "80%",
+        borderRadius: 48,
         borderWidth: 2,
     },
     mediumText: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     largeContainer: {
         paddingHorizontal: 48,
         paddingVertical: 12,
-        width: 300,
+        width: "80%",
         borderRadius: 48,
         borderWidth: 3,
     },
