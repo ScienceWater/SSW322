@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, Text} from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Button} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
 import { signUpWithEmail, getFirstName } from '../services/firebase';
@@ -24,7 +24,8 @@ export default function LoginScreen({ navigation }: ScreenProps) {
       <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Last Name' onChangeText={setlName} />
       <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Email'  onChangeText={setEmail} />
       <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Password' secureTextEntry onChangeText={setPassword} />
-      <MyButton  type="primary" text="Signup" size="medium" onPressFn={async () => {
+      <View style={{height: Dimensions.get('screen').width * 0.04}}></View>
+      <MyButton  type="primary" text="Sign up" size="large" onPressFn={async () => {
           let result = await signUpWithEmail(fName, lName, email, password);
           if (result === 'success') {
             let firstName = await getFirstName();
@@ -32,7 +33,7 @@ export default function LoginScreen({ navigation }: ScreenProps) {
           }
         }}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
-      <Text>Don't have an account? <MyButton  text="Login" onPressFn={() => navigation.navigate("Login")}/></Text>
+      <Text>Don't have an account? <MyButton text="Login" onPressFn={() => navigation.navigate("Login")}/></Text>
     </View>
     </>
   );

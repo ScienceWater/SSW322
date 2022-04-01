@@ -20,6 +20,7 @@ export default function LoginScreen({ navigation }: ScreenProps) {
   
       <TextInput style={styles.textInput}label="Email" activeUnderlineColor="#A32638" value={email} onChangeText={(text) => setEmail(text)} />
       <TextInput style={styles.textInput}  secureTextEntry label="Password" activeUnderlineColor="#A32638" value={password} onChangeText={(text) => setPassword(text)} />
+      <View style={{height: Dimensions.get('screen').width * 0.025}}></View>
       <MyButton text="Log In" type="primary" size="large" onPressFn={async () => {
           let result = await logInWithEmail(email, password);
           if (result === 'success') {
@@ -44,14 +45,9 @@ const styles = StyleSheet.create({
   },
   
   textInput: {
-   
     color: "#A32638",
-   
     width: "80%",
-    marginBottom: 15, 
-
+    marginBottom: 15,
     backgroundColor: "transparent",
-  
-    padding: 5
   },
 });

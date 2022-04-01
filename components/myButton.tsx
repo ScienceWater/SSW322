@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     primaryText: {
         color: 'white',
-        fontWeight: '400',
+        fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16
     },
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 32,
         paddingVertical: 12,
-        width: 150,
+        width: "80%",
         borderRadius: 32,
-        borderColor: '#133C55',
+        borderColor: '#A32638',
         borderWidth: 2,
     },
     secondaryText: {
-        color: '#133C55',
+        color: '#A32638',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     largeContainer: {
         paddingHorizontal: 48,
         paddingVertical: 12,
-        width: "80%",
         borderRadius: 48,
         borderWidth: 3,
     },

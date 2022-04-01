@@ -3,9 +3,9 @@ import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { BottomNavigation} from 'react-native-paper';
 
-const MusicRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
-const AlbumsRoute = () => <Text>Cart goes here</Text>;
-const RecentsRoute = () => <Text>Account</Text>;
+const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
+const CartRoute = () => <Text>Cart goes here</Text>;
+const AccountRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
   navigation: any
@@ -13,6 +13,7 @@ type ScreenProps = {
 }
 
 const HomeScreen = ({ navigation, route }: ScreenProps) => {
+  
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
@@ -21,14 +22,15 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    home: MusicRoute,
-    cart: AlbumsRoute,
-    account: RecentsRoute,
+    home: HomeRoute,
+    cart: CartRoute,
+    account: AccountRoute,
   });
+
 
   return (
     <>
-    <Text>Hi, {route.params.firstName}</Text>
+    <Text>Hi</Text>
     <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
