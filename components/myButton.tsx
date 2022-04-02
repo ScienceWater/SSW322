@@ -41,12 +41,12 @@ export default MyButton;
 
 const styles = StyleSheet.create({
     primaryContainer: {
-        backgroundColor: '#133C55',
+        backgroundColor: '#A32638',
         paddingHorizontal: 32,
         paddingVertical: 12,
-        width: 150,
-        borderRadius: 32,
-        borderColor: '#133C55',
+        width: "80%",
+        borderRadius: 15,
+        borderColor: '#A32638',
         borderWidth: 2,
     },
     primaryText: {
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 32,
         paddingVertical: 12,
-        width: 150,
+        width: "80%",
         borderRadius: 32,
-        borderColor: '#133C55',
+        borderColor: '#A32638',
         borderWidth: 2,
     },
     secondaryText: {
-        color: '#133C55',
+        color: '#A32638',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 16
@@ -82,18 +82,17 @@ const styles = StyleSheet.create({
     },
     mediumContainer: {
         paddingHorizontal: 32,
-        paddingVertical: 8,
-        width: 150,
-        borderRadius: 32,
+        paddingVertical: 12,
+        width: "80%",
+        borderRadius: 48,
         borderWidth: 2,
     },
     mediumText: {
-        fontSize: 16
+        fontSize: 18
     },
     largeContainer: {
         paddingHorizontal: 48,
         paddingVertical: 12,
-        width: 300,
         borderRadius: 48,
         borderWidth: 3,
     },

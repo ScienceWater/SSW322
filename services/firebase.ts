@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmail
 import { getFirestore, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import Constants from 'expo-constants';
 
+
 const firebaseConfig = {
     apiKey: Constants.manifest?.extra?.firebaseApiKey,
     authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
@@ -31,6 +32,7 @@ export const signUpWithEmail = async (fName: string, lName: string, email: strin
         return 'success'
     } catch (e) {
         console.log(e);
+       
         return e;
     }
 }
@@ -86,6 +88,26 @@ export const getFirstName = async () => {
         });
         return firstName;
 
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const getProducts = async () => {
+    let products = [{}];
+    try {
+        const q = query(
+            collection(firestore, "products")
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            products.push({
+                name: doc.data()['name'],
+                price: doc.data()['price']
+                //add more here
+            })
+           
+        });
     } catch (e) {
         console.log(e);
     }
