@@ -92,3 +92,23 @@ export const getFirstName = async () => {
         console.log(e);
     }
 }
+
+export const getProducts = async () => {
+    let products = [{}];
+    try {
+        const q = query(
+            collection(firestore, "products")
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            products.push({
+                name: doc.data()['name'],
+                price: doc.data()['price']
+                //add more here
+            })
+           
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}

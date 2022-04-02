@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, Text} from 'react-native';
 import { TextInput } from 'react-native-paper';
-
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
 import { logInWithEmail , getFirstName} from '../services/firebase';
@@ -17,7 +16,6 @@ export default function LoginScreen({ navigation }: ScreenProps) {
     <>
     <StatusBar style="light" />
     <View style={styles.container}>
-  
       <TextInput style={styles.textInput}label="Email" activeUnderlineColor="#A32638" value={email} onChangeText={(text) => setEmail(text)} />
       <TextInput style={styles.textInput}  secureTextEntry label="Password" activeUnderlineColor="#A32638" value={password} onChangeText={(text) => setPassword(text)} />
       <View style={{height: Dimensions.get('screen').width * 0.025}}></View>
@@ -28,9 +26,9 @@ export default function LoginScreen({ navigation }: ScreenProps) {
             navigation.navigate("Home", {firstName: firstName});
           }
       }}/>
-   
-
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
+      <MyButton text="Don't have an account? Sign up" onPressFn={() => navigation.navigate("Signup")}/>
+
     </View>
     </>
   );

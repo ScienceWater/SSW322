@@ -2,6 +2,8 @@ import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { BottomNavigation} from 'react-native-paper';
+import { getProducts } from '../services/firebase';
+import MyButton from '../components/myButton';
 
 const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
 const CartRoute = () => <Text>Cart goes here</Text>;
@@ -11,6 +13,7 @@ type ScreenProps = {
   navigation: any
   route: any
 }
+
 
 const HomeScreen = ({ navigation, route }: ScreenProps) => {
   
@@ -30,13 +33,16 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
+    
     <Text>Hi</Text>
+    
     <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
       renderScene={renderScene}
       barStyle={{ backgroundColor: '#A32638' }}
     />
+
     </>
   );
 };

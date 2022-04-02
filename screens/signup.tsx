@@ -18,7 +18,7 @@ export default function LoginScreen({ navigation }: ScreenProps) {
 
   return (
     <>
-    <StatusBar style="light" />
+    <StatusBar/>
     <View style={styles.container}>
       <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='First Name' onChangeText={setfName} />
       <TextInput style={styles.textInput} activeUnderlineColor="#A32638" label='Last Name' onChangeText={setlName} />
@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }: ScreenProps) {
           }
         }}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
-      <Text>Don't have an account? <MyButton text="Login" onPressFn={() => navigation.navigate("Login")}/></Text>
+      <MyButton text="Already have an account? Log in" onPressFn={() => navigation.navigate("Login")}/>
     </View>
     </>
   );
@@ -47,12 +47,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textInput: {
-  
     width: "80%",
     marginBottom: 10, 
     backgroundColor: "transparent",
-
-    padding: 5
   },
   
 });
