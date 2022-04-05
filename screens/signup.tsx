@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, Text, Button} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
-import { signUpWithEmail, getFirstName } from '../services/firebase';
+import { signUpWithEmail, getEmail } from '../services/firebase';
 import { TextInput } from 'react-native-paper';
 
 
@@ -28,7 +28,8 @@ export default function LoginScreen({ navigation }: ScreenProps) {
       <MyButton  type="primary" text="Sign up" size="large" onPressFn={async () => {
           let result = await signUpWithEmail(fName, lName, email, password);
           if (result === 'success') {
-            let firstName = await getFirstName();
+            let firstName = await getEmail();
+            const user = 
             navigation.navigate("Home", {firstName: firstName});
           }
         }}/>

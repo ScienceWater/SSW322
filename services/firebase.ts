@@ -1,7 +1,9 @@
+import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getFirestore, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import Constants from 'expo-constants';
+import 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -41,6 +43,7 @@ export const logInWithEmail = async (email: string, password: string) => {
     try {
         let result = await signInWithEmailAndPassword(auth, email, password);
         user = result.user;
+        console.log(user.email);
         return 'success'
     } catch (e) {
         console.log(e);
@@ -74,26 +77,37 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
     }
 }
 
-export const getFirstName = async () => {
+export const addNewProduct = async (itemName: string, Category: string, Price: string, Description: string) => {
     try {
-        let firstName = 'Temp';
-        const q = query(
-            collection(firestore, "users"), 
-            where("email", "==", user?.email)
-        );
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            console.log(doc.data()['first_name'])
-            firstName =  doc.data()['first_name'];
-        });
-        return firstName;
-
+        const productData = {
+            item_name: itemName,
+            category: Category,
+            price: Price,
+            description: Description,
+        }
+        const docRef = await addDoc(collection(firestore, "products", ), productData);
+        console.log(docRef.id);
     } catch (e) {
         console.log(e);
     }
 }
 
-export const getProducts = async () => {
+export const getEmail = async () => {
+    let email = user?.email;
+    let email_one = "this";
+    if(email == null){
+        email_one ='null'
+    }
+    else if(email == undefined){
+        email_one='undefined'
+    }
+    else{
+        email_one = email;
+    }
+    return email_one;
+}
+
+export const getProducts = async (Categroy: string, itemName: string, Price: string, Description: string) => {
     let products = [{}];
     try {
         const q = query(
