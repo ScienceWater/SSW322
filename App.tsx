@@ -7,18 +7,19 @@ import SignupScreen from './screens/signup';
 import HomeScreen from "./screens/home";
 import StartUpScreen from "./screens/startup"
 import React from 'react';
+import PostingsScreen from './screens/postings';
 
 const Stack = createNativeStackNavigator();
 
-export default  function App() {
-  
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen name="Startup" component={StartUpScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Startup" component={StartUpScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Postings" component={PostingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

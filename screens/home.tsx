@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Dimensions, StyleProp, StyleSheet, Text, TextInput, View, ViewProps, ViewStyle } from 'react-native';
+import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Title } from 'react-native-paper';
+import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 import { $DeepPartial } from '@callstack/react-theme-provider';
@@ -9,6 +9,7 @@ import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
 const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
 const CartRoute = () => <Text>Cart goes here</Text>;
+const SellRoute = () => <Text>Post items here</Text> 
 const AccountRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
@@ -23,12 +24,14 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'cart', title: 'Cart', icon: 'cart' },
+    { key: 'sell', title: 'Sell', icon: 'cash-usd'},
     { key: 'account', title: 'Account', icon: 'account' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeRoute,
     cart: CartRoute,
+    sell: SellRoute,
     account: AccountRoute,
   });
 
