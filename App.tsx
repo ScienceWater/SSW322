@@ -8,14 +8,19 @@ import HomeScreen from "./screens/home";
 import StartUpScreen from "./screens/startup"
 import React from 'react';
 import PostingsScreen from './screens/postings';
+import addProductScreen from "./screens/addProduct";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+      screenOptions={{
+      }}
+      >
         <Stack.Screen name="Startup" component={StartUpScreen} />
+        <Stack.Screen name="addProduct" component={addProductScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />

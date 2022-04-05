@@ -6,11 +6,13 @@ import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 import { $DeepPartial } from '@callstack/react-theme-provider';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
+import addProductScreen from "./addProduct";
 
-const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
+const HomeRoute = () => <Text></Text>;
 const CartRoute = () => <Text>Cart goes here</Text>;
 const SellRoute = () => <Text>Post items here</Text> 
 const AccountRoute = () => <Text>Account</Text>;
+const AddProductRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
   navigation: any
@@ -26,6 +28,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     { key: 'cart', title: 'Cart', icon: 'cart' },
     { key: 'sell', title: 'Sell', icon: 'cash-usd'},
     { key: 'account', title: 'Account', icon: 'account' },
+    { key: 'addItem', title: 'AddItem', icon: 'library'}
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
@@ -33,6 +36,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     cart: CartRoute,
     sell: SellRoute,
     account: AccountRoute,
+    addItem: AddProductRoute
   });
 
   // Searchbar
@@ -75,6 +79,9 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
           labelStyle={styles.categoryButtonLabelStyle}>
           Books
         </Button>
+    
+    <Text>Hi {route.params.firstName}</Text>
+    <MyButton text="AddItem" onPressFn={() => navigation.navigate("addProduct", {email: route.params.firstName})}/>
 
         <Button
           icon="hanger"
