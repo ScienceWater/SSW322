@@ -3,7 +3,7 @@ import { StyleSheet, View, Dimensions, Text} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
-import { logInWithEmail , getFirstName} from '../services/firebase';
+import { logInWithEmail , getEmail} from '../services/firebase';
 
 type ScreenProps = {
   navigation: any
@@ -16,13 +16,30 @@ export default function LoginScreen({ navigation }: ScreenProps) {
     <>
     <StatusBar style="light" />
     <View style={styles.container}>
-      <TextInput style={styles.textInput}label="Email" activeUnderlineColor="#A32638" value={email} onChangeText={(text) => setEmail(text)} />
-      <TextInput style={styles.textInput}  secureTextEntry label="Password" activeUnderlineColor="#A32638" value={password} onChangeText={(text) => setPassword(text)} />
+      <TextInput
+      style={styles.textInput} 
+      label="Email" 
+      activeUnderlineColor="#A32638" 
+      value={email} 
+      onChangeText={email => setEmail(email)}
+      />
+
+
+      <TextInput 
+      style={styles.textInput}
+      secureTextEntry
+      label="Password"
+      activeUnderlineColor="#A32638"
+      value={password} 
+      onChangeText={(text) => setPassword(text)} 
+      />
+
+      
       <View style={{height: Dimensions.get('screen').width * 0.025}}></View>
       <MyButton text="Log In" type="primary" size="large" onPressFn={async () => {
           let result = await logInWithEmail(email, password);
           if (result === 'success') {
-            let firstName = await getFirstName();
+            let firstName = await getEmail();
             navigation.navigate("Home", {firstName: firstName});
           }
       }}/>
