@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { BottomNavigation} from 'react-native-paper';
+import { BottomNavigation, Searchbar } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 
@@ -14,9 +14,9 @@ type ScreenProps = {
   route: any
 }
 
-
 const HomeScreen = ({ navigation, route }: ScreenProps) => {
   
+  // Bottom Navigation
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
@@ -30,11 +30,21 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     account: AccountRoute,
   });
 
+  // Searchbar
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   return (
     <>
     
     <Text>Hi</Text>
+
+    <Searchbar
+      placeholder="Search"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
     
     <BottomNavigation
       navigationState={{ index, routes }}
