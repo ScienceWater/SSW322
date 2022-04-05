@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { BottomNavigation, Searchbar, Headline, Button } from 'react-native-paper';
+import { BottomNavigation, Searchbar, Headline, Button, Subheading } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 
@@ -35,12 +35,6 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
 
   const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
 
-  // Buttons (item categories)
-  <>
-    
-    
-  </>
-
   return (
     <>
     
@@ -51,6 +45,8 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
       onChangeText={onChangeSearch}
       value={searchQuery}
     />
+
+    <Subheading>Categories</Subheading>
 
     <View style={styles.categoryButtonView}>
       <Button
