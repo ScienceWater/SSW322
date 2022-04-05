@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
+import { Dimensions, StyleProp, StyleSheet, Text, TextInput, View, ViewProps, ViewStyle } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { BottomNavigation, Searchbar, Headline, Button, Subheading } from 'react-native-paper';
+import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
+import { $DeepPartial } from '@callstack/react-theme-provider';
+import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
 const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
 const CartRoute = () => <Text>Cart goes here</Text>;
@@ -95,6 +97,16 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
       </View>
 
       <Subheading style={styles.subheading}>Recommended</Subheading>
+
+      <View style={styles.cardView}>
+        <Card style={styles.cardStyle}>
+          <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
+          <Card.Content>
+            <Title>Item name</Title>
+            <Paragraph>Price</Paragraph>
+          </Card.Content>
+        </Card>
+      </View>
     </View>
 
     <BottomNavigation
@@ -147,5 +159,14 @@ const styles = StyleSheet.create({
   categoryButtonLabelStyle: {
     fontSize: 15,
     color: '#000000',
+  },
+  cardView: {
+
+  },
+  cardStyle: {
+    width: 150,
+  },
+  cardCoverStyle: {
+    padding: 5,
   },
 });
