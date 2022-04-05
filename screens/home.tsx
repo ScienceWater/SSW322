@@ -93,6 +93,8 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
         Electronics
       </Button>
     </View>
+
+    <Subheading>Recommended</Subheading>
     
     <BottomNavigation
       navigationState={{ index, routes }}
