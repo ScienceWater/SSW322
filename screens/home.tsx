@@ -37,72 +37,72 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
-    
-    <Headline>Exchange4Students</Headline>
+    <View style={styles.container}>
+    <Headline style={styles.headline}>Exchange4Students</Headline>
 
-    <Searchbar
-      placeholder="Search"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-    />
+      <Searchbar
+        placeholder="Search items"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
 
-    <Subheading>Categories</Subheading>
+      <Subheading style={styles.subheading}>Categories</Subheading>
 
-    <View style={styles.categoryButtonView}>
-      <Button
-        icon="bed-empty"
-        onPress={() => console.log('Go to Furniture page')}
-        mode="contained"
-        compact={true}
-        contentStyle={{flexDirection: "column"}}
-        labelStyle={{fontSize: 12, color: "#000000"}}
-        style={{marginVertical: 5, marginLeft: 5, backgroundColor: "#d6d6d6"}}>
-        Furniture
-      </Button>
-      
-      <Button
-        icon="book"
-        onPress={() => console.log('Go to Books page')}
-        mode="contained"
-        compact={true}
-        contentStyle={{flexDirection: "column"}}
-        labelStyle={{fontSize: 12, color: "#000000"}}
-        style={{marginVertical: 5, marginLeft: 5, backgroundColor: "#d6d6d6"}}>
-        Books
-      </Button>
+      <View style={styles.categoryButtonView}>
+        <Button
+          icon="bed-empty"
+          onPress={() => console.log('Go to Furniture page')}
+          mode="contained"
+          compact={true}
+          style={styles.categoryButtonStyle}
+          contentStyle={styles.categoryButtonContentStyle}
+          labelStyle={styles.categoryButtonLabelStyle}>
+          Furniture
+        </Button>
+        
+        <Button
+          icon="book"
+          onPress={() => console.log('Go to Books page')}
+          mode="contained"
+          compact={true}
+          style={styles.categoryButtonStyle}
+          contentStyle={styles.categoryButtonContentStyle}
+          labelStyle={styles.categoryButtonLabelStyle}>
+          Books
+        </Button>
 
-      <Button
-        icon="hanger"
-        onPress={() => console.log('Go to Clothing page')}
-        mode="contained"
-        compact={true}
-        contentStyle={{flexDirection: "column"}}
-        labelStyle={{fontSize: 12, color: "#000000"}}
-        style={{marginVertical: 5, marginLeft: 5, backgroundColor: "#d6d6d6"}}>
-        Clothing
-      </Button>
+        <Button
+          icon="hanger"
+          onPress={() => console.log('Go to Clothing page')}
+          mode="contained"
+          compact={true}
+          style={styles.categoryButtonStyle}
+          contentStyle={styles.categoryButtonContentStyle}
+          labelStyle={styles.categoryButtonLabelStyle}>
+          Clothing
+        </Button>
 
-      <Button
-        icon="lightbulb"
-        onPress={() => console.log('Go to Electronics page')}
-        mode="contained"
-        compact={true}
-        contentStyle={{flexDirection: "column"}}
-        labelStyle={{fontSize: 12, color: "#000000"}}
-        style={{marginVertical: 5, marginLeft: 5, backgroundColor: "#d6d6d6"}}>
-        Electronics
-      </Button>
+        <Button
+          icon="lightbulb"
+          onPress={() => console.log('Go to Electronics page')}
+          mode="contained"
+          compact={true}
+          style={styles.categoryButtonStyle}
+          contentStyle={styles.categoryButtonContentStyle}
+          labelStyle={styles.categoryButtonLabelStyle}>
+          Electronics
+        </Button>
+      </View>
+
+      <Subheading style={styles.subheading}>Recommended</Subheading>
     </View>
 
-    <Subheading>Recommended</Subheading>
-    
     <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-      barStyle={{ backgroundColor: '#A32638' }}
-    />
-
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}
+        barStyle={{ backgroundColor: '#A32638' }}
+      />
     </>
   );
 };
@@ -112,7 +112,9 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 2,
+    backgroundColor: '#fff',
+    padding: 5,
   },
   textInput: {
     height: 40,
@@ -122,8 +124,28 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 10
   },
+  headline: {
+    paddingBottom: 5,
+  },
+  subheading: {
+    fontSize: 20,
+    marginTop: 5,
+  },
   categoryButtonView: {
-    flexDirection: "row",
-    justifyContent: "flex-start"
+    flexDirection: 'row',
+  },
+  categoryButtonStyle: {
+    marginVertical: 5,
+    marginRight: 5,
+    backgroundColor: '#d6d6d6',
+    paddingTop: 10,
+  },
+  categoryButtonContentStyle: {
+    flexDirection: 'column',
+    width: 84,
+  },
+  categoryButtonLabelStyle: {
+    fontSize: 15,
+    color: '#000000',
   },
 });
