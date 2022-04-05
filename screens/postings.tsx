@@ -1,6 +1,6 @@
 import * as React from "react";
-import { View } from "react-native";
-import { BottomNavigation, Headline, Text } from "react-native-paper";
+import { ScrollView, StyleSheet } from "react-native";
+import { Button, Card, Headline, Paragraph, Title } from "react-native-paper";
 
 type ScreenProps = {
   navigation: any
@@ -11,11 +11,66 @@ const PostingsScreen = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
-    <View>
-      <Headline>My Items for Sale</Headline>
-    </View>
+    <ScrollView style={styles.container}>
+      <Headline style={styles.headline}>My Listings</Headline>
+
+      <Button icon="plus-box-outline"
+              mode="outlined"
+              onPress={() => console.log("List new item")}
+              style={styles.listButtonStyle}
+              contentStyle={styles.listButtonContentStyle}
+              labelStyle={styles.listButtonLabelStyle}>
+        LIST NEW ITEM
+      </Button>
+
+      <Card style={styles.cardStyle}>
+        <Card.Cover source={{ uri: 'https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg' }} />
+        <Card.Content style={styles.cardContentStyle}>
+          <Title>Item name</Title>
+          <Paragraph>Price</Paragraph>
+        </Card.Content>
+      </Card>
+
+      <Card style={styles.cardStyle}>
+        <Card.Cover source={{ uri: 'https://cb2.scene7.com/is/image/CB2/DondraQueenBedSHS21_1x1' }} />
+        <Card.Content style={styles.cardContentStyle}>
+          <Title>Item name</Title>
+          <Paragraph>Price</Paragraph>
+        </Card.Content>
+      </Card>
+    </ScrollView>
     </>
   );
 }
 
 export default PostingsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 2,
+    backgroundColor: '#fff',
+    padding: 5,
+  },
+  headline: {
+    marginBottom: 5,
+  },
+  listButtonStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#A32638',
+    borderWidth: 1,
+    paddingVertical: 10,
+    marginBottom: 5,
+  },
+  listButtonContentStyle: {
+
+  },
+  listButtonLabelStyle: {
+    color: '#A32638',
+  },
+  cardStyle: {
+    marginBottom: 5,
+  },
+  cardContentStyle: {
+    paddingTop: 5,
+  },
+});
