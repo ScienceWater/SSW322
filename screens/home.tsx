@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text, TextInput} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { BottomNavigation, Searchbar } from 'react-native-paper';
+import { BottomNavigation, Searchbar, Headline } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 
@@ -33,12 +33,12 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
   // Searchbar
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const onChangeSearch = query => setSearchQuery(query);
+  const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
 
   return (
     <>
     
-    <Text>Hi</Text>
+    <Headline>Exchange4Students</Headline>
 
     <Searchbar
       placeholder="Search"
