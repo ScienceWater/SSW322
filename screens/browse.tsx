@@ -7,18 +7,38 @@ import MyButton from '../components/myButton';
 import { $DeepPartial } from '@callstack/react-theme-provider';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 import addProductScreen from "./addProduct";
+import { getMultiFactorResolver } from 'firebase/auth';
 
 type ScreenProps = {
   navigation: any
   route: any
 }
 
+let items: Object[] = [];
+
 const BrowseScreen = ({ navigation, route }: ScreenProps) => {
+
+  
+  const updateItems = () => {
+    items.forEach(item => console.log(item));
+  }
+
+  const search = async (category: string, item_name: string) => {
+    items = await getProducts(category, item_name);
+    updateItems();
+  }
 
   // Searchbar
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
+  const onChangeSearch = (query: React.SetStateAction<string>) => {
+    setSearchQuery(query);
+    search(category, searchQuery);
+  }
+  
+  let category = '';
+
+  search(category, searchQuery);
 
   return (
     <>
@@ -124,6 +144,7 @@ const styles = StyleSheet.create({
   },
   categoryButtonView: {
     flexDirection: 'row',
+    alignSelf: 'center',
   },
   categoryButtonStyle: {
     marginVertical: 5,
@@ -143,6 +164,7 @@ const styles = StyleSheet.create({
 
   },
   cardStyle: {
+    alignSelf: 'center',
     width: 150,
   },
   cardCoverStyle: {
