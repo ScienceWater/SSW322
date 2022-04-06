@@ -21,6 +21,7 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
   const search = async (category: string, item_name: string) => {
     items = await getProducts(category, item_name);
+    return items
   }
 
   // Searchbar
@@ -59,8 +60,12 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
       <View style={styles.categoryButtonView}>
         <Button
           icon="bed-empty"
-          onPress={() => {category = "furniture";
-          search(category, searchQuery);
+          onPress={() => {
+            if (category === "furniture")
+              category = "";
+            else
+              category = "furniture";
+            search(category, searchQuery);
         }}
           mode="contained"
           compact={true}
@@ -72,8 +77,12 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
         
         <Button
           icon="book"
-          onPress={() => {category = "Books";
-          search(category, searchQuery);
+          onPress={() => {
+            if (category === "Books")
+              category = "";
+            else
+              category = "Books";
+            search(category, searchQuery);
         }}
           mode="contained"
           compact={true}
@@ -88,8 +97,12 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
         <Button
           icon="hanger"
-          onPress={() => {category = "Clothing";
-          search(category, searchQuery);
+          onPress={() => {
+            if (category === "Clothing")
+              category = "";
+            else
+              category = "Clothing";
+            search(category, searchQuery);
         }}
           mode="contained"
           compact={true}
@@ -101,8 +114,12 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
         <Button
           icon="lightbulb"
-          onPress={() => {category = "electronics";
-          search(category, searchQuery);
+          onPress={() => {
+            if (category === "electronics")
+              category = "";
+            else
+              category = "electronics";
+            search(category, searchQuery);
         }}
           mode="contained"
           compact={true}
@@ -116,17 +133,15 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
       <Subheading style={styles.subheading}>Recommended</Subheading>
       
       <ScrollView style={styles.cardView}>
-      {items.map((item: Object, i) => {
-      return (
-        <Card style={styles.cardStyle}>
+      {items.map((item, i) => { return (
+          <Card style={styles.cardStyle}>
           <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
           <Card.Content>
             <Title>{getItemName(item)}</Title>
             <Paragraph>{getPrice(item)}</Paragraph>
           </Card.Content>
-        </Card>
-      )
-    })}
+          </Card>
+      )})}
       </ScrollView>
     </View>
     </>
