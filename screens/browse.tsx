@@ -7,6 +7,7 @@ import MyButton from '../components/myButton';
 import { $DeepPartial } from '@callstack/react-theme-provider';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 import addProductScreen from "./addProduct";
+import { getMultiFactorResolver } from 'firebase/auth';
 
 type ScreenProps = {
   navigation: any
@@ -37,7 +38,6 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
   let category = '';
 
   search(category, searchQuery);
-
 
   return (
     <>
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
   },
   categoryButtonView: {
     flexDirection: 'row',
+    alignSelf: 'center',
   },
   categoryButtonStyle: {
     marginVertical: 5,
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
 
   },
   cardStyle: {
+    alignSelf: 'center',
     width: 150,
   },
   cardCoverStyle: {
