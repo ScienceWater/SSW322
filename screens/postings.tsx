@@ -1,6 +1,9 @@
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Button, Card, Headline, Paragraph, Title } from "react-native-paper";
+import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AddProductScreen from "./addProduct";
 
 type ScreenProps = {
   navigation: any
@@ -16,7 +19,7 @@ const PostingsScreen = ({ navigation, route }: ScreenProps) => {
 
       <Button icon="plus-box-outline"
               mode="outlined"
-              onPress={() => console.log("List new item")}
+              onPress={() => navigation.navigate('Startup')}
               style={styles.listButtonStyle}
               contentStyle={styles.listButtonContentStyle}
               labelStyle={styles.listButtonLabelStyle}>
