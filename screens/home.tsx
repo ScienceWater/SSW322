@@ -6,13 +6,15 @@ import { getProducts } from '../services/firebase';
 import MyButton from '../components/myButton';
 import { $DeepPartial } from '@callstack/react-theme-provider';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
-import addProductScreen from "./addProduct";
+import BrowseScreen from './browse';
+import PostingsScreen from './postings';
+import AddProductScreen from './addProduct';
 
-const HomeRoute = () => <Text></Text>;
+const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} />;
 const CartRoute = () => <Text>Cart goes here</Text>;
-const SellRoute = () => <Text>Post items here</Text> 
+const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
+const ListProductRoute = () => <AddProductScreen navigation={undefined} route={undefined} />;
 const AccountRoute = () => <Text>Account</Text>;
-const AddProductRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
   navigation: any
@@ -27,98 +29,20 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'cart', title: 'Cart', icon: 'cart' },
     { key: 'sell', title: 'Sell', icon: 'cash-usd'},
+    { key: 'listItem', title: 'List Item', icon: 'plus-box-outline'},
     { key: 'account', title: 'Account', icon: 'account' },
-    { key: 'addItem', title: 'AddItem', icon: 'library'}
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeRoute,
     cart: CartRoute,
     sell: SellRoute,
+    listItem: ListProductRoute,
     account: AccountRoute,
-    addItem: AddProductRoute
   });
-
-  // Searchbar
-  const [searchQuery, setSearchQuery] = React.useState('');
-
-  const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
 
   return (
     <>
-    <View style={styles.container}>
-    <Headline style={styles.headline}>Exchange4Students</Headline>
-
-      <Searchbar
-        placeholder="Search items"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-      />
-
-      <Subheading style={styles.subheading}>Categories</Subheading>
-
-      <View style={styles.categoryButtonView}>
-        <Button
-          icon="bed-empty"
-          onPress={() => console.log('Go to Furniture page')}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Furniture
-        </Button>
-        
-        <Button
-          icon="book"
-          onPress={() => console.log('Go to Books page')}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Books
-        </Button>
-    
-    <Text>Hi {route.params.firstName}</Text>
-    <MyButton text="AddItem" onPressFn={() => navigation.navigate("addProduct", {email: route.params.firstName})}/>
-
-        <Button
-          icon="hanger"
-          onPress={() => console.log('Go to Clothing page')}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Clothing
-        </Button>
-
-        <Button
-          icon="lightbulb"
-          onPress={() => console.log('Go to Electronics page')}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Electronics
-        </Button>
-      </View>
-
-      <Subheading style={styles.subheading}>Recommended</Subheading>
-
-      <View style={styles.cardView}>
-        <Card style={styles.cardStyle}>
-          <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
-          <Card.Content>
-            <Title>Item name</Title>
-            <Paragraph>Price</Paragraph>
-          </Card.Content>
-        </Card>
-      </View>
-    </View>
-
     <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { StyleSheet, View, Dimensions, Text} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
@@ -10,8 +10,8 @@ type ScreenProps = {
 }
 
 export default function LoginScreen({ navigation }: ScreenProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   return (
     <>
     <StatusBar style="light" />

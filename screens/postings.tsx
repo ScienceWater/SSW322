@@ -1,49 +1,84 @@
 import * as React from "react";
-import { View } from "react-native";
-import { BottomNavigation, Headline, Text } from "react-native-paper";
-
-const HomeRoute = () => <Text>PUT HOMESCREEN ELEMENTS HERE</Text>;
-const CartRoute = () => <Text>Cart goes here</Text>;
-const SellRoute = () => <Text>Post items here</Text> 
-const AccountRoute = () => <Text>Account</Text>;
+import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS } from "react-native";
+import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { NavigationContainer, useNavigation, useNavigationState } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AddProductScreen from "./addProduct";
+import ProductScreen from "./product";
 
 type ScreenProps = {
   navigation: any
   route: any
 }
 
-const PostingsScreen = ({ navigation, route }: ScreenProps) => {
-  // Bottom Navigation
-  const [index, setIndex] = React.useState(2);
-  const [routes] = React.useState([
-    { key: 'home', title: 'Home', icon: 'home' },
-    { key: 'cart', title: 'Cart', icon: 'cart' },
-    { key: 'sell', title: 'Sell', icon: 'cash-usd'},
-    { key: 'account', title: 'Account', icon: 'account' },
-  ]);
+//const IndividualItemRoute = () => <ProductScreen navigation={undefined} route={undefined}/>;
 
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeRoute,
-    cart: CartRoute,
-    sell: SellRoute,
-    account: AccountRoute,
-  });
+const PostingsScreen = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
-    <View>
-      <Headline>My Items for Sale</Headline>
-    </View>
-    
+    <ScrollView style={styles.container}>
+      <Headline style={styles.headline}>My Listings</Headline>
 
-    <BottomNavigation
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-        barStyle={{ backgroundColor: '#A32638' }}
-      />
+      <Button icon="plus-box-outline"
+              mode="outlined"
+              onPress= {() => AddProductScreen}
+              style={styles.listButtonStyle}
+              contentStyle={styles.listButtonContentStyle}
+              labelStyle={styles.listButtonLabelStyle}>
+        LIST NEW ITEM
+      </Button>
+
+      <TouchableOpacity onPress={() => navigation.navigate('product')}>
+      <Card style={styles.cardStyle}>
+        <Card.Cover source={{ uri: 'https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg' }} />
+        <Card.Content style={styles.cardContentStyle}>
+          <Title>Item name</Title>
+          <Paragraph>Price</Paragraph>
+        </Card.Content>
+      </Card>
+      </TouchableOpacity>
+
+      <Card style={styles.cardStyle}>
+        <Card.Cover source={{ uri: 'https://cb2.scene7.com/is/image/CB2/DondraQueenBedSHS21_1x1' }} />
+        <Card.Content style={styles.cardContentStyle}>
+          <Title>Item name</Title>
+          <Paragraph>Price</Paragraph>
+        </Card.Content>
+      </Card>
+    </ScrollView>
     </>
   );
 }
 
 export default PostingsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 2,
+    backgroundColor: '#fff',
+    padding: 5,
+  },
+  headline: {
+    marginBottom: 5,
+  },
+  listButtonStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#A32638',
+    borderWidth: 1,
+    paddingVertical: 10,
+    marginBottom: 5,
+  },
+  listButtonContentStyle: {
+
+  },
+  listButtonLabelStyle: {
+    color: '#A32638',
+  },
+  cardStyle: {
+    marginBottom: 5,
+  },
+  cardContentStyle: {
+    paddingTop: 5,
+  },
+});
