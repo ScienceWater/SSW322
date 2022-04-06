@@ -1,14 +1,17 @@
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS } from "react-native";
 import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useNavigationState } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddProductScreen from "./addProduct";
+import ProductScreen from "./product";
 
 type ScreenProps = {
   navigation: any
   route: any
 }
+
+//const IndividualItemRoute = () => <ProductScreen navigation={undefined} route={undefined}/>;
 
 const PostingsScreen = ({ navigation, route }: ScreenProps) => {
 
@@ -19,13 +22,14 @@ const PostingsScreen = ({ navigation, route }: ScreenProps) => {
 
       <Button icon="plus-box-outline"
               mode="outlined"
-              onPress={() => navigation.navigate('Startup')}
+              onPress= {() => AddProductScreen}
               style={styles.listButtonStyle}
               contentStyle={styles.listButtonContentStyle}
               labelStyle={styles.listButtonLabelStyle}>
         LIST NEW ITEM
       </Button>
 
+      <TouchableOpacity onPress={() => navigation.navigate('product')}>
       <Card style={styles.cardStyle}>
         <Card.Cover source={{ uri: 'https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg' }} />
         <Card.Content style={styles.cardContentStyle}>
@@ -33,6 +37,7 @@ const PostingsScreen = ({ navigation, route }: ScreenProps) => {
           <Paragraph>Price</Paragraph>
         </Card.Content>
       </Card>
+      </TouchableOpacity>
 
       <Card style={styles.cardStyle}>
         <Card.Cover source={{ uri: 'https://cb2.scene7.com/is/image/CB2/DondraQueenBedSHS21_1x1' }} />

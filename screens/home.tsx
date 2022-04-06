@@ -10,10 +10,10 @@ import BrowseScreen from './browse';
 import PostingsScreen from './postings';
 import AddProductScreen from './addProduct';
 
-const HomeRoute = () => <BrowseScreen />;
+const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} />;
 const CartRoute = () => <Text>Cart goes here</Text>;
-const SellRoute = () => <PostingsScreen />;
-const ListProductRoute = () => <AddProductScreen />;
+const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
+const ListProductRoute = () => <AddProductScreen navigation={undefined} route={undefined} />;
 const AccountRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {

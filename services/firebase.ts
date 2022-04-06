@@ -107,22 +107,25 @@ export const getEmail = async () => {
     return email_one;
 }
 
-export const getProducts = async (Categroy: string, itemName: string, Price: string, Description: string) => {
-    let products = [{}];
+export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
+    let products: Object[] = [];
     try {
         const q = query(
             collection(firestore, "products")
         );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            if (data['category'].includes(category) && data['item_name'].includes(item_name))
             products.push({
-                name: doc.data()['name'],
-                price: doc.data()['price']
-                //add more here
-            })
-           
+                category: data['category'],
+                item_name: data['item_name'],
+                price: data['price'],
+                description: data['description']
+            });
         });
     } catch (e) {
         console.log(e);
     }
+    return products;
 }

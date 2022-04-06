@@ -13,12 +13,31 @@ type ScreenProps = {
   route: any
 }
 
+let items: Object[] = [];
+
 const BrowseScreen = ({ navigation, route }: ScreenProps) => {
+
+  const updateItems = () => {
+    items.forEach(item => console.log(item));
+  }
+
+  const search = async (category: string, item_name: string) => {
+    items = await getProducts(category, item_name);
+    updateItems();
+  }
 
   // Searchbar
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const onChangeSearch = (query: React.SetStateAction<string>) => setSearchQuery(query);
+  const onChangeSearch = (query: React.SetStateAction<string>) => {
+    setSearchQuery(query);
+    search(category, searchQuery);
+  }
+  
+  let category = '';
+
+  search(category, searchQuery);
+
 
   return (
     <>
@@ -36,7 +55,9 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
       <View style={styles.categoryButtonView}>
         <Button
           icon="bed-empty"
-          onPress={() => console.log('Go to Furniture page')}
+          onPress={() => console.log('Go to Furniture page')
+
+        }
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
