@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle } from 'react-native';
+import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
@@ -8,6 +8,7 @@ import { $DeepPartial } from '@callstack/react-theme-provider';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 import addProductScreen from "./addProduct";
 import { getMultiFactorResolver } from 'firebase/auth';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 type ScreenProps = {
   navigation: any
@@ -16,29 +17,31 @@ type ScreenProps = {
 
 let items: Object[] = [];
 
-const BrowseScreen = ({ navigation, route }: ScreenProps) => {
-
-  
-  const updateItems = () => {
-    items.forEach(item => console.log(item));
-  }
+let BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
   const search = async (category: string, item_name: string) => {
     items = await getProducts(category, item_name);
-    updateItems();
   }
 
   // Searchbar
   const [searchQuery, setSearchQuery] = React.useState('');
 
+  let category = '';
+
+  search(category, searchQuery);
+
   const onChangeSearch = (query: React.SetStateAction<string>) => {
     setSearchQuery(query);
     search(category, searchQuery);
   }
-  
-  let category = '';
 
-  search(category, searchQuery);
+  const getItemName = (item: any) => {
+    return item.item_name;
+  }
+
+  const getPrice = (item: any) => {
+    return item.price;
+  }
 
   return (
     <>
@@ -56,7 +59,9 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
       <View style={styles.categoryButtonView}>
         <Button
           icon="bed-empty"
-          onPress={() => console.log('Go to Furniture page')}
+          onPress={() => {category = "furniture";
+          search(category, searchQuery);
+        }}
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
@@ -67,7 +72,9 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
         
         <Button
           icon="book"
-          onPress={() => console.log('Go to Books page')}
+          onPress={() => {category = "Books";
+          search(category, searchQuery);
+        }}
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
@@ -81,7 +88,9 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
         <Button
           icon="hanger"
-          onPress={() => console.log('Go to Clothing page')}
+          onPress={() => {category = "Clothing";
+          search(category, searchQuery);
+        }}
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
@@ -92,7 +101,9 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
 
         <Button
           icon="lightbulb"
-          onPress={() => console.log('Go to Electronics page')}
+          onPress={() => {category = "electronics";
+          search(category, searchQuery);
+        }}
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
@@ -103,23 +114,26 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
       </View>
 
       <Subheading style={styles.subheading}>Recommended</Subheading>
-
-      <View style={styles.cardView}>
+      
+      <ScrollView style={styles.cardView}>
+      {items.map((item: Object, i) => {
+      return (
         <Card style={styles.cardStyle}>
           <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
           <Card.Content>
-            <Title>Item name</Title>
-            <Paragraph>Price</Paragraph>
+            <Title>{getItemName(item)}</Title>
+            <Paragraph>{getPrice(item)}</Paragraph>
           </Card.Content>
         </Card>
-      </View>
+      )
+    })}
+      </ScrollView>
     </View>
     </>
   );
 };
 
 export default BrowseScreen;
-
 
 const styles = StyleSheet.create({
   container: {

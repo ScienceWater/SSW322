@@ -116,7 +116,8 @@ export const getProducts = async (category: string, item_name: string) => {//, p
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let data = doc.data();
-            if (data['category'].includes(category) && data['item_name'].includes(item_name))
+            if ((data['category'].toString() === category && data['item_name'].toString().includes(item_name)) ||
+                (category === '' && data['item_name'].toString().includes(item_name)))
             products.push({
                 category: data['category'],
                 item_name: data['item_name'],
