@@ -17,7 +17,12 @@ type ScreenProps = {
 
 let items: Object[] = [];
 
-let BrowseScreen = ({ navigation, route }: ScreenProps) => {
+
+const BrowseScreen = ({ navigation, route }: ScreenProps) => {
+
+  const updateItems = () => {
+    items.forEach(item => console.log(item));
+  }
 
   const search = async (category: string, item_name: string) => {
     items = await getProducts(category, item_name);
@@ -66,7 +71,8 @@ let BrowseScreen = ({ navigation, route }: ScreenProps) => {
             else
               category = "furniture";
             search(category, searchQuery);
-        }}
+        }}        
+        }
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
