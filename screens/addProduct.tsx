@@ -1,24 +1,24 @@
 import * as React from 'react';
-import { Alert, Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, Dimensions, Platform, SafeAreaView, StyleSheet, Text, View, Image } from 'react-native';
 import { Appbar, DarkTheme, DefaultTheme, Provider, Surface, TextInput, ThemeProvider } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
-import ModalDropdown from 'react-native-modal-dropdown';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
 import { addNewProduct, getEmail} from '../services/firebase';
+import * as ImagePicker from 'expo-image-picker';
 
 type ScreenProps = {
   navigation: any,
   route: any
-}
+} 
 
 export default function AddProductScreen({ navigation }: ScreenProps) {
   const [itemName, setItemName] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [Description, setDescription] = React.useState("");
   const [Category, setCategory] = React.useState("");
-
   const [showDropDown, setShowDropDown] = React.useState(false);
+
   const categories = [
     {
       label: 'Furniture',
@@ -37,6 +37,39 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
       value: 'electronics',
     },
   ];
+  
+
+  const [image, setImage] = React.useState(null);
+
+  React.useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+
+  
+  };
+
+
 
   return (
     <Provider>
@@ -125,7 +158,11 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
             </Surface>
           </ThemeProvider> */}
 
-          <MyButton style={styles.button} type="primary" text="List Item" size="large" onPressFn={() => addNewProduct(itemName, Category, price, Description)}/>
+          <Button title="Pick an image from camera roll" onPress={pickImage} />
+          {image && <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />}
+
+          <MyButton style={styles.button} type="primary" text="List Item" size="large" onPressFn={() => addNewProduct(itemName, Category, price, Description, image)}/>
+          
         </View>
     </View>
     </Provider>

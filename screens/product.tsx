@@ -2,16 +2,12 @@ import * as React from "react";
 import { View, ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, Image, SafeAreaView, Dimensions} from "react-native";
 import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
 
-
 type ScreenProps = {
   navigation: any
   route: any
 }
 
 const ProductScreen = ({ navigation, route }: ScreenProps) => {
-  // console.log(Object.values(route.params.product));
-  // console.log(Object.keys(route.params.product));
-
   if (route.params.product.category === "clothing") {
 
     return (
@@ -20,7 +16,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
         <ScrollView style={styles.productCard}>
           <Image
             style={styles.image}
-            source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }}
+            source={{ uri: route.params.product.imageURL}}
           />
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -56,7 +52,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
         <ScrollView style={styles.productCard}>
           <Image
             style={styles.image}
-            source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }}
+            source={{ uri: route.params.product.imageURL}}
           />
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -93,7 +89,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
           <ScrollView style={styles.productCard}>
             <Image
               style={styles.image}
-              source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }}
+              source={{ uri: route.params.product.imageURL}}
             />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -129,7 +125,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             <ScrollView style={styles.productCard}>
               <Image
                 style={styles.image}
-                source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }}
+                source={{ uri: route.params.product.imageURL}}
               />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -166,7 +162,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
               <ScrollView style={styles.productCard}>
                 <Image
                   style={styles.image}
-                  source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }}
+                  source={{ uri: route.params.product.imageURL}}
                 />
                 <View style={styles.infoContainer}>
                   <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -195,7 +191,6 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             </>
             )
           }
-  
 }
 
 export default ProductScreen;

@@ -4,6 +4,8 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmail
 import { getFirestore, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
+import { getStorage, ref, uploadString } from "firebase/storage";
+
 
 
 const firebaseConfig = {
@@ -18,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
-
+const storage = getStorage(app);
 // AUTHENTICATION // ---------------------------------------------------------
 let user = auth.currentUser;
 
@@ -77,13 +79,14 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
     }
 }
 
-export const addNewProduct = async (itemName: string, Category: string, Price: string, Description: string) => {
+export const addNewProduct = async (itemName: string, Category: string, Price: string, Description: string, imageURL: string) => {
     try {
         const productData = {
             item_name: itemName,
             category: Category,
             price: Price,
             description: Description,
+            imageURL: imageURL
         }
         const docRef = await addDoc(collection(firestore, "products", ), productData);
         console.log(docRef.id);
@@ -107,7 +110,7 @@ export const getEmail = async () => {
     return email_one;
 }
 
-export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
+export const getProducts = async (category: string, item_name: string, imageUrl: string) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
         const q = query(
@@ -130,6 +133,7 @@ export const getProducts = async (category: string, item_name: string) => {//, p
                 edition: data['edition'],
                 course_number: data['course_number'],
                 model: data['model'],
+                imageURL: data['imageURL'],
             });
         });
     } catch (e) {
@@ -137,3 +141,4 @@ export const getProducts = async (category: string, item_name: string) => {//, p
     }
     return products;
 }
+
