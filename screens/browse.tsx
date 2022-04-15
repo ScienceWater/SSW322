@@ -1,14 +1,8 @@
 import * as React from 'react';
 import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle, ScrollView } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
-import MyButton from '../components/myButton';
-import { $DeepPartial } from '@callstack/react-theme-provider';
-import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
-import addProductScreen from "./addProduct";
-import { getMultiFactorResolver } from 'firebase/auth';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native'
 
 type ScreenProps = {
   navigation: any
@@ -18,7 +12,9 @@ type ScreenProps = {
 let items: Object[] = [];
 
 
-const BrowseScreen = ({ navigation, route }: ScreenProps) => {
+const BrowseScreen = ({ route }: ScreenProps) => {
+
+  const navigation = useNavigation();
 
   const updateItems = () => {
     items.forEach(item => console.log(item));
@@ -39,6 +35,10 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
   const onChangeSearch = (query: React.SetStateAction<string>) => {
     setSearchQuery(query);
     search(category, searchQuery);
+  }
+
+  const getItem = (item: any) => {
+    return item;
   }
 
   const getItemName = (item: any) => {
@@ -72,7 +72,7 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
               category = "furniture";
             search(category, searchQuery);
         }}        
-        }
+        
           mode="contained"
           compact={true}
           style={styles.categoryButtonStyle}
@@ -140,12 +140,12 @@ const BrowseScreen = ({ navigation, route }: ScreenProps) => {
       
       <ScrollView style={styles.cardView}>
       {items.map((item, i) => { return (
-          <Card style={styles.cardStyle}>
-          <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
-          <Card.Content>
-            <Title>{getItemName(item)}</Title>
-            <Paragraph>{getPrice(item)}</Paragraph>
-          </Card.Content>
+          <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
+            <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
+            <Card.Content>
+              <Title>{getItemName(item)}</Title>
+              <Paragraph>{getPrice(item)}</Paragraph>
+            </Card.Content>
           </Card>
       )})}
       </ScrollView>
@@ -196,10 +196,11 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   cardView: {
-
+    display: "flex",
+    flexDirection: "column"
   },
   cardStyle: {
-    alignSelf: 'center',
+   
     width: 150,
   },
   cardCoverStyle: {

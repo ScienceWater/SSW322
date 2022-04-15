@@ -122,7 +122,14 @@ export const getProducts = async (category: string, item_name: string) => {//, p
                 category: data['category'],
                 item_name: data['item_name'],
                 price: data['price'],
-                description: data['description']
+                description: data['description'],
+                color: data['color'],
+                dimensions: data['dimensions'],
+                weight: data['weight'],
+                size: data['size'],
+                edition: data['edition'],
+                course_number: data['course_number'],
+                model: data['model'],
             });
         });
     } catch (e) {
