@@ -10,7 +10,7 @@ import React from 'react';
 import PostingsScreen from './screens/postings';
 import addProductScreen from "./screens/addProduct";
 import ProductScreen from './screens/product';
-
+import Cart from "./screens/cart"
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Product" component={ProductScreen} />
+        <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Postings" component={PostingsScreen} />
         <Stack.Screen name="addProduct" component={addProductScreen} />
       </Stack.Navigator>

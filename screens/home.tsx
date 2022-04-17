@@ -4,9 +4,10 @@ import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar,
 import BrowseScreen from './browse';
 import PostingsScreen from './postings';
 import AddProductScreen from './addProduct';
+import Cart from "./cart";
 
 const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} />;
-const CartRoute = () => <Text>Cart goes here</Text>;
+const CartRoute = () => <Cart navigation={undefined} route={undefined}/>;
 const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
 const ListProductRoute = () => <AddProductScreen navigation={undefined} route={undefined} />;
 const AccountRoute = () => <Text>Account</Text>;
@@ -23,7 +24,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
   const [routes] = React.useState([
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'cart', title: 'Cart', icon: 'cart' },
-    { key: 'sell', title: 'Sell', icon: 'cash-usd'},
+    { key: 'sell', title: 'Sell', icon: 'store'},
     { key: 'listItem', title: 'List Item', icon: 'plus-box-outline'},
     { key: 'account', title: 'Account', icon: 'account' },
   ]);
@@ -42,7 +43,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
-        barStyle={{ backgroundColor: '#A32638' }}
+        barStyle={{ marginTop: 0, borderWidth: 0 ,  backgroundColor: '#A32638' }}
       />
     </>
   );

@@ -110,7 +110,7 @@ export const getEmail = async () => {
     return email_one;
 }
 
-export const getProducts = async (category: string, item_name: string, imageUrl: string) => {//, price: string, description: string) => {
+export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
         const q = query(

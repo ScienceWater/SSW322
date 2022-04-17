@@ -39,7 +39,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             <Text style={styles.description}>Color: {route.params.product.color}</Text>
           </View>
         </ScrollView>
-        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> console.log("Add to cart")}>Add to Cart</Button>
+        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
       </SafeAreaView>
       </>
       )
@@ -77,7 +77,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             
           </View>
         </ScrollView>
-        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> console.log("Add to cart")}>Add to Cart</Button>
+        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
       </SafeAreaView>
       </>
       )
@@ -113,7 +113,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
               
             </View>
           </ScrollView>
-          <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> console.log("Add to cart")}>Add to Cart</Button>
+          <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
         </SafeAreaView>
         </>
         )
@@ -150,7 +150,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                 
               </View>
             </ScrollView>
-            <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> console.log("Add to cart")}>Add to Cart</Button>
+            <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
           </SafeAreaView>
           </>
           )
@@ -186,7 +186,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                   
                 </View>
               </ScrollView>
-              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> console.log("Add to cart")}>Add to Cart</Button>
+              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
             </SafeAreaView>
             </>
             )

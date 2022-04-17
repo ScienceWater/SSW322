@@ -1,10 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS } from "react-native";
 import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { NavigationContainer, useNavigation, useNavigationState } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddProductScreen from "./addProduct";
-import ProductScreen from "./product";
 
 type ScreenProps = {
   navigation: any

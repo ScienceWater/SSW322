@@ -48,6 +48,10 @@ const BrowseScreen = ({ route }: ScreenProps) => {
   const getPrice = (item: any) => {
     return item.price;
   }
+  const getImage = (item: any) => {
+    return item.imageURL;
+  }
+
 
   return (
     <>
@@ -138,16 +142,19 @@ const BrowseScreen = ({ route }: ScreenProps) => {
 
       <Subheading style={styles.subheading}>Recommended</Subheading>
       
-      <ScrollView style={styles.cardView}>
-      {items.map((item, i) => { return (
+      <ScrollView>
+        <View style={styles.cardView}> 
+        {items.map((item, i) => { return (
           <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
-            <Card.Cover style={styles.cardCoverStyle} source={{ uri: 'https://m.media-amazon.com/images/M/MV5BMjc2NjYyMzgtMmExMi00YzllLTgxNjgtNjA4MmUzMWZlNDZkXkEyXkFqcGdeQXRyYW5zY29kZS13b3JrZmxvdw@@._V1_.jpg' }} />
-            <Card.Content>
+            <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
+            <Card.Content style={styles.cardContent}>
               <Title>{getItemName(item)}</Title>
-              <Paragraph>{getPrice(item)}</Paragraph>
+              <Paragraph>${getPrice(item)}</Paragraph>
             </Card.Content>
           </Card>
       )})}
+        </View>
+     
       </ScrollView>
     </View>
     </>
@@ -160,7 +167,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: '#fff',
-    padding: 5,
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   textInput: {
     height: 40,
@@ -196,14 +205,23 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   cardView: {
-    display: "flex",
-    flexDirection: "column"
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  marginLeft: 10,
+  marginTop: 15,
   },
   cardStyle: {
-   
-    width: 150,
+    borderColor: "transparent",
+    width: "45%",
+    marginRight: 18,
+    marginBottom: 18,
+    borderWidth: 0
   },
   cardCoverStyle: {
-    padding: 5,
+  
   },
+  cardContent: {
+    padding: 5
+  }
 });
