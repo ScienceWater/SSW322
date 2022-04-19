@@ -4,12 +4,14 @@ import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar,
 import BrowseScreen from './browse';
 import PostingsScreen from './postings';
 import AddProductScreen from './addProduct';
+
 import Cart from "./cart";
+import ChooseCateg from './chooseCateg';
 
 const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} />;
 const CartRoute = () => <Cart navigation={undefined} route={undefined}/>;
 const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
-const ListProductRoute = () => <AddProductScreen navigation={undefined} route={undefined} />;
+const ListProductRoute = () => <ChooseCateg />;
 const AccountRoute = () => <Text>Account</Text>;
 
 type ScreenProps = {
