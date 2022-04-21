@@ -1,23 +1,75 @@
 import * as React from 'react';
-import { Alert,Dimensions, Platform, SafeAreaView, StyleSheet, Text, View, Image } from 'react-native';
+import { Alert,Dimensions, Platform, SafeAreaView, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { Appbar, DarkTheme, DefaultTheme, Provider, Surface, TextInput, ThemeProvider, Button} from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 import { StatusBar } from 'expo-status-bar';
 import MyButton from '../components/myButton';
 import { addNewProduct, getEmail} from '../services/firebase';
 import * as ImagePicker from 'expo-image-picker';
+import defaultImage from '../components/image-not-found.png';
+import { useCallback, useRef } from 'react';
 
 type ScreenProps = {
   navigation: any,
   route: any
-} 
+}
 
-export default function AddProductScreen({ navigation }: ScreenProps) {
+export default function AddProductScreen({ navigation, route }: ScreenProps) {
   const [itemName, setItemName] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [Description, setDescription] = React.useState("");
   const [Category, setCategory] = React.useState("");
   const [showDropDown, setShowDropDown] = React.useState(false);
+  const [showDropDown1, setShowDropDown1] = React.useState(false);
+  const [Width, setWidth] = React.useState("");
+  const [Height, setHeight] = React.useState("");
+  const [Depth, setDepth] = React.useState("");
+  const [Brand, setBrand] = React.useState("");
+  const [Serial, setSerial] = React.useState("");
+  const [Sport, setSport] = React.useState("");
+  const [ISBN, setISBN] = React.useState("");
+  const [Author, setAuthor] = React.useState("");
+  const inputEl = useRef(null);
+
+  const handleInputSerial= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setSerial(input)
+  }, [setSerial]);
+
+  const handleInputWidth= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setWidth(input)
+  }, [setWidth]);
+
+  const handleInputHeight= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setHeight(input)
+  }, [setHeight]);
+
+  const handleInputDepth= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setDepth(input)
+  }, [setDepth]);
+
+  const handleInputISBN= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setISBN(input)
+  }, [setISBN]);
+
+  const handleInputAuthor= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setAuthor(input)
+  }, [setAuthor]);
+
+  const handleInputSport= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setSport(input)
+  }, [setSport]);
+
+  const handleInputBrand= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setBrand(input)
+  }, [setBrand]);
 
   const categories = [
     {
@@ -41,9 +93,47 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
       value: 'sports gear',
     },
   ];
-  
 
-  const [image, setImage] = React.useState(null);
+  const sportList = [
+    {
+      label: 'Soccer',
+      value: 'soccer',
+    },
+    {
+      label: 'Football',
+      value: 'football',
+    },
+    {
+      label: 'Hockey',
+      value: 'hockey',
+    },
+    {
+      label: 'Lacrosse',
+      value: 'lacrosse',
+    },
+    {
+      label: 'Baseball',
+      value: 'baseball',
+    },
+    {
+      label: 'Track',
+      value: 'track',
+    },
+    {
+      label: 'Curling',
+      value: 'curling',
+    },
+    {
+      label: 'Swimming',
+      value: 'swimming',
+    },
+    {
+      label: 'Other',
+      value: 'other',
+    },
+  ];
+  
+  const [image, setImage] = React.useState(Image.resolveAssetSource(defaultImage).uri);
 
   React.useEffect(() => {
     (async () => {
@@ -69,15 +159,121 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
     }
   };
 
+  const DiffInputs = () =>{
 
+    if(route.params.category == 'Furniture'){
+      return (
+        <>
+        <TextInput
+              label="Width"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              defaultValue={Width}
+              onEndEditing={ handleInputWidth }
+          />
+
+          <TextInput
+              label="Height"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              defaultValue={Height} 
+              onEndEditing={handleInputHeight}
+          />
+
+          <TextInput
+              label="Depth"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              defaultValue={Depth} 
+              onEndEditing={handleInputDepth}
+          />
+          </>
+      );
+    }
+    if(route.params.category == "Electronic"){
+      return(
+        <TextInput
+              label="Serial number"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              onEndEditing={handleInputSerial}
+              defaultValue={Serial}
+          />
+      );
+    }
+    if(route.params.category == "Clothing"){
+      return(
+        <TextInput
+              label="Clothing Brand"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              defaultValue={Brand} 
+              onEndEditing={handleInputBrand}
+          />
+      );
+    }
+    if(route.params.category == "Sports gear"){
+      return(
+        <TextInput
+              label="Sport"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              defaultValue={Sport} 
+              onEndEditing={handleInputSport}
+          />
+      );
+    }
+    if(route.params.category == "Book"){
+      return(
+        <>
+        <TextInput
+              label="ISBN"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              defaultValue={ISBN} 
+              onEndEditing={handleInputISBN}
+          />
+
+          <TextInput
+              label="Author"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              defaultValue={Author} 
+              onEndEditing={handleInputAuthor}
+          />
+        </>
+      );
+    }
+    else{
+      return(
+        <>
+        </>
+      );
+    }
+  }
 
   return (
     <Provider>
     <StatusBar style="light" />
+    <ScrollView>
     <View style={styles.container}>
-        <Text style={styles.title}>Add New Item</Text>
+        <Text style={styles.title}>Add New {route.params.category} Item</Text>
     
-        <DropDown
+        {/* <DropDown
           label={'Category'}
           mode={'outlined'}
           dropDownStyle={{ backgroundColor: "transparent",}}
@@ -89,7 +285,7 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
           setValue={setCategory}
           list={categories}
           
-        />
+        /> */}
   
           <TextInput
               label="Item name"
@@ -118,14 +314,26 @@ export default function AddProductScreen({ navigation }: ScreenProps) {
               value={Description} 
               onChangeText={Description => setDescription(Description)}
           />
+
+          <DiffInputs/>
+
           <View style={styles.flexCont}>
               <Button style={styles.imgpicker} icon="image" color="black" onPress={pickImage}>Upload from camera roll</Button>
                <Image source={{ uri: image }} style={{ width: 100, height: 100, marginTop: 15, backgroundColor: "#ebebeb"}} />
           </View>
          
-          <Button icon="check" style={styles.button} mode="contained" onPress={() => addNewProduct(itemName, Category, price, Description, image)}>List Item</Button>
+          <Button icon="check" style={styles.button} mode="contained" onPress={async () => {
+            let usersEmail = await getEmail()
+            const Category = route.params.category;
+
+            addNewProduct(
+              itemName, Category, price, Description, image, usersEmail, 
+              Width, Height, Depth, ISBN, Brand, Serial, Sport, Author
+              )
+            }}>List Item</Button>
      
     </View>
+    </ScrollView>
     </Provider>
   );
 }

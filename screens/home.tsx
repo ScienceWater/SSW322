@@ -30,6 +30,9 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     { key: 'listItem', title: 'List Item', icon: 'plus-box-outline'},
     { key: 'account', title: 'Account', icon: 'account' },
   ]);
+  const email = route.params.usersEmail
+  console.log(email);
+  
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeRoute,

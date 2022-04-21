@@ -1,7 +1,7 @@
 import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -45,7 +45,6 @@ export const logInWithEmail = async (email: string, password: string) => {
     try {
         let result = await signInWithEmailAndPassword(auth, email, password);
         user = result.user;
-        console.log(user.email);
         return 'success'
     } catch (e) {
         console.log(e);
@@ -71,6 +70,7 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
             first_name: fName,
             last_name: lName,
             email: email
+
         }
         const docRef = await addDoc(collection(firestore, "users", ), userData);
         console.log(docRef.id);
@@ -79,14 +79,32 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
     }
 }
 
-export const addNewProduct = async (itemName: string, Category: string, Price: string, Description: string, imageURL: string) => {
+export const addNewProduct = async (
+    itemName: string, Category: string, Price: string, 
+    Description: string, imageURL: string, Email: string,
+    Width: string, Height: string, Depth: string,
+    ISBN: string, Brand: String, Serial: String, 
+    Sport: String, Author: String
+    ) => {
     try {
         const productData = {
             item_name: itemName,
             category: Category,
             price: Price,
             description: Description,
-            imageURL: imageURL
+            imageURL: imageURL,
+            sellersEmail: Email,
+            sold: false,
+            dimensions: {
+                width: Width,
+                height: Height,
+                depth: Depth,
+            },
+            ISBN: ISBN,
+            Brand: Brand,
+            Serial: Serial,
+            Sport: Sport,
+            Author: Author,
         }
         const docRef = await addDoc(collection(firestore, "products", ), productData);
         console.log(docRef.id);
