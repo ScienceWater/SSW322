@@ -29,12 +29,18 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
   const [Weight, setWeight] = React.useState("");
   const [Color, setColor] = React.useState("");
   const [Size, setSize] = React.useState("");
+  const [CourseNumber, setCourseNumber] = React.useState("");
   const inputEl = useRef(null);
 
   const handleInputSerial= useCallback((ev) => {
     const input =  ev.nativeEvent.text;
     setSerial(input)
   }, [setSerial]);
+
+  const handleInputCourseNumber= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setCourseNumber(input)
+  }, [setCourseNumber]);
 
   const handleInputSize = useCallback((ev) => {
     const input =  ev.nativeEvent.text;
@@ -315,6 +321,7 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
     }
     if(route.params.category == "Sports gear"){
       return(
+        <>
         <TextInput
               label="Sport"
               mode="outlined"
@@ -324,6 +331,16 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               defaultValue={Sport} 
               onEndEditing={handleInputSport}
           />
+          <TextInput
+              label="Weight"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              onEndEditing={handleInputWeight}
+              defaultValue={Weight}
+          />
+        </>
       );
     }
     if(route.params.category == "Book"){
@@ -338,7 +355,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               defaultValue={ISBN} 
               onEndEditing={handleInputISBN}
           />
-
           <TextInput
               label="Author"
               mode="outlined"
@@ -346,6 +362,14 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               style={styles.textInput} 
               defaultValue={Author} 
               onEndEditing={handleInputAuthor}
+          />
+          <TextInput
+              label="Course Number"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              defaultValue={CourseNumber} 
+              onEndEditing={handleInputCourseNumber}
           />
         </>
       );
@@ -419,7 +443,7 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
             const Category = route.params.category;
             addNewProduct(
               itemName, Category, price, Description, image, usersEmail, 
-              Width, Height, Depth, ISBN, Brand, Serial, Sport, Author, Weight, Color, Size
+              Width, Height, Depth, ISBN, Brand, Serial, Sport, Author, Weight, Color, Size, CourseNumber
             );
               //navigation.navigate("Home")  
             }    
@@ -437,6 +461,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     width: '100%',
+    height: Dimensions.get('screen').width * .9
 
   },
   textInput: {

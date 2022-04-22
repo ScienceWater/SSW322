@@ -84,7 +84,7 @@ export const addNewProduct = async (
     Description: string, imageURL: string, Email: string,
     Width: string, Height: string, Depth: string,
     ISBN: string, Brand: String, Serial: String, 
-    Sport: String, Author: String, Weight: String, Color: string, Size: string
+    Sport: String, Author: String, Weight: String, Color: string, Size: string, CourseNumber: string
     ) => {
     try {
         const productData = {
@@ -107,7 +107,8 @@ export const addNewProduct = async (
             Author: Author,
             weight: Weight,
             Color: Color,
-            Size: Size
+            Size: Size,
+            CourseNumber: CourseNumber
         }
         const docRef = await addDoc(collection(firestore, "products", ), productData);
         console.log(docRef.id);
@@ -151,12 +152,15 @@ export const getProducts = async (category: string, item_name: string) => {//, p
                 dimensions: data.dimensions,
                 weight: data['weight'],
                 size: data['Size'],
-                edition: data['edition'],
-                course_number: data['course_number'],
+                course_number: data['CourseNumber'],
                 serial: data['Serial'],
                 imageURL: data['imageURL'],
                 brand: data['Brand'],
+                isbn: data['ISBN'],
+                author: data['Author'],
+                sport: data['Sport']
             });
+
         });
     } catch (e) {
         console.log(e);

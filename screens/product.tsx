@@ -86,7 +86,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
       </SafeAreaView>
       </>
       )
-    } else if (route.params.product.category === "books") {
+    } else if (route.params.product.category === "Book") {
 
       return (
         <>
@@ -113,9 +113,9 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
               />
               <Text style={styles.heading}>Product Details</Text>
               <Text style={styles.description}>Category: {route.params.product.category}</Text>
-              <Text style={styles.description}>Edition: {route.params.product.edition}</Text>
+              <Text style={styles.description}>ISBN: {route.params.product.isbn}</Text>
+              <Text style={styles.description}>Author: {route.params.product.author}</Text>
               <Text style={styles.description}>Course Number: {route.params.product.course_number}</Text>
-              
             </View>
           </ScrollView>
           <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
@@ -163,7 +163,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
           </SafeAreaView>
           </>
           )
-        } else if (route.params.product.category === "sports gear") {
+        } else if (route.params.product.category === "Sports gear") {
 
           return (
             <>
@@ -190,9 +190,9 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                   />
                   <Text style={styles.heading}>Product Details</Text>
                   <Text style={styles.description}>Category: {route.params.product.category}</Text>
-    
                   <Text style={styles.description}>Weight: {route.params.product.weight}</Text>
-                  
+                  <Text style={styles.description}>Sport: {route.params.product.sport}</Text>
+
                 </View>
               </ScrollView>
               <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
