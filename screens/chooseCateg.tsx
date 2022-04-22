@@ -14,11 +14,26 @@ export default function ChooseCateg() {
     return (
         <View style={styles.container}>
             <Text  style={styles.title}>Choose the type of item you wish to add </Text>
-            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined" icon="laptop"  onPress={()=>{return navigation.navigate("addProduct", {category: "electronics"})}}>Electronics</Chip>
-            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="sofa"  onPress={()=>{return navigation.navigate("addProduct", {category: "furniture"})}}>Furniture</Chip>
-            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="store"  onPress={()=>{return navigation.navigate("addProduct", {category: "clothing"})}}>Clothing</Chip>
-            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="basketball"  onPress={()=>{return navigation.navigate("addProduct", {category: "sports gear"})}}>Sports Gear</Chip>
-            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined" icon="book"  onPress={()=>{return navigation.navigate("addProduct", {category: "books"})}}>Books</Chip>
+            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined" icon="laptop"  onPress={()=>{return navigation.navigate("addProduct", {
+                category: "Electronic",
+                paramArray: ["Serial"]
+                })}}>Electronics</Chip>
+            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="sofa"  onPress={()=>{return navigation.navigate("addProduct", {
+                category: "Furniture",
+                paramArray: ["Width", "Depth", "Height"]
+                })}}>Furniture</Chip>
+            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="store"  onPress={()=>{return navigation.navigate("addProduct", {
+                category: "Clothing",
+                paramArray: ["Brand"]
+                })}}>Clothing</Chip>
+            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined"  icon="basketball"  onPress={()=>{return navigation.navigate("addProduct", {
+                category: "Sports gear",
+                paramArray: ["Sport"]
+                })}}>Sports Gear</Chip>
+            <Chip textStyle={{fontSize: 20}} style={styles.chip} mode="outlined" icon="book"  onPress={()=>{return navigation.navigate("addProduct", {
+                category: "Book",
+                paramArray: ["ISBN", "Author"]
+                })}}>Books</Chip>
         </View>
 
     );

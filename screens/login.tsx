@@ -39,8 +39,8 @@ export default function LoginScreen({ navigation }: ScreenProps) {
       <MyButton text="Log In" type="primary" size="large" onPressFn={async () => {
           let result = await logInWithEmail(email, password);
           if (result === 'success') {
-            let firstName = await getEmail();
-            navigation.navigate("Home", {firstName: firstName});
+            let usersEmail = await getEmail();
+            navigation.navigate("Home", {usersEmail: usersEmail});
           }
       }}/>
       <View style={{height: Dimensions.get('screen').width * 0.05}}></View>
