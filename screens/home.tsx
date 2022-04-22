@@ -3,7 +3,6 @@ import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyl
 import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import BrowseScreen from './browse';
 import PostingsScreen from './postings';
-import AddProductScreen from './addProduct';
 
 import Cart from "./cart";
 import ChooseCateg from './chooseCateg';
