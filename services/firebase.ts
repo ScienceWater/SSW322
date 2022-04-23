@@ -6,8 +6,6 @@ import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
 
-
-
 const firebaseConfig = {
     apiKey: Constants.manifest?.extra?.firebaseApiKey,
     authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
@@ -165,6 +163,37 @@ export const getProducts = async (category: string, item_name: string) => {//, p
     } catch (e) {
         console.log(e);
     }
+    return products;
+}
+
+export const getUserProducts = async () => {
+    let products: Object[] = [];
+    let email = await getEmail();
+    const q = query(collection(firestore, "products"), where("sellersEmail", "==", email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        products.push({
+            category: data['category'],
+            item_name: data['item_name'],
+            price: data['price'],
+            description: data['description'],
+            Color: data['Color'],
+            dimensions: data.dimensions,
+            weight: data['weight'],
+            size: data['Size'],
+            course_number: data['CourseNumber'],
+            serial: data['Serial'],
+            imageURL: data['imageURL'],
+            brand: data['Brand'],
+            isbn: data['ISBN'],
+            author: data['Author'],
+            sport: data['Sport']
+     
+        })
+    });
+
     return products;
 }
 

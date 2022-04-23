@@ -1,52 +1,77 @@
 import * as React from "react";
-import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS } from "react-native";
-import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import AddProductScreen from "./addProduct";
+import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
+import { FAB, Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title, Searchbar} from "react-native-paper";
+import { getUserProducts } from '../services/firebase';
+import {useNavigation} from '@react-navigation/native'
 
 type ScreenProps = {
   navigation: any
   route: any
 }
 
-//const IndividualItemRoute = () => <ProductScreen navigation={undefined} route={undefined}/>;
+const PostingsScreen = ({ route }: ScreenProps) => {
+  const navigation = useNavigation();
+   const [items, setItems] = React.useState<Object[]>([]);
 
-const PostingsScreen = ({ navigation, route }: ScreenProps) => {
+  const getItems = async () => {
+    let result : Object[] = [];
+
+
+    result = await getUserProducts();
+    setItems(result);
+  }
+
+  const getItem = (item: any) => {
+    return item;
+  }
+
+  const getItemName = (item: any) => {
+    return item.item_name;
+  }
+
+  const getPrice = (item: any) => {
+    return item.price;
+  }
+  const getImage = (item: any) => {
+    return item.imageURL;
+  }
+
+  //console.log(items[1])
+
+  getItems()
+
 
   return (
     <>
-    <ScrollView style={styles.container}>
-      <Headline style={styles.headline}>My Listings</Headline>
+    <View style={styles.container}>
+    <FAB
+    style={styles.button}
+    medium
+    icon="plus"
+    label="Add New Listing"
+    onPress={()=>{return navigation.navigate("ChooseCateg")}}
+  />
+    <Headline style={styles.headline}>My Listings</Headline>
 
-      <Button icon="plus-box-outline"
-              mode="outlined"
-              onPress= {() => AddProductScreen}
-              style={styles.listButtonStyle}
-              contentStyle={styles.listButtonContentStyle}
-              labelStyle={styles.listButtonLabelStyle}>
-        LIST NEW ITEM
-      </Button>
-
-      <TouchableOpacity onPress={() => navigation.navigate('product')}>
-      <Card style={styles.cardStyle}>
-        <Card.Cover source={{ uri: 'https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg' }} />
-        <Card.Content style={styles.cardContentStyle}>
-          <Title>Item name</Title>
-          <Paragraph>Price</Paragraph>
-        </Card.Content>
-      </Card>
-      </TouchableOpacity>
-
-      <Card style={styles.cardStyle}>
-        <Card.Cover source={{ uri: 'https://cb2.scene7.com/is/image/CB2/DondraQueenBedSHS21_1x1' }} />
-        <Card.Content style={styles.cardContentStyle}>
-          <Title>Item name</Title>
-          <Paragraph>Price</Paragraph>
-        </Card.Content>
-      </Card>
-    </ScrollView>
+      <ScrollView>
+         <View style={styles.cardView}> 
+        {items.map((item, i) => { return (
+          <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
+            <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
+            <Card.Content style={styles.cardContent}>
+              <Title>{getItemName(item)}</Title>
+              <Paragraph>${getPrice(item)}</Paragraph>
+            </Card.Content>
+          </Card>
+      )})}
+        </View>
+     
+      </ScrollView>
+    </View>
     </>
   );
-}
+};
+
 
 export default PostingsScreen;
 
@@ -54,28 +79,70 @@ const styles = StyleSheet.create({
   container: {
     flex: 2,
     backgroundColor: '#fff',
-    padding: 5,
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  textInput: {
+    height: 40,
+    width: "75%",
+    marginBottom: 10, 
+    borderBottomColor: "#3A3A3A",
+    borderBottomWidth: 1,
+    padding: 10
   },
   headline: {
-    marginBottom: 5,
+    paddingBottom: 5,
+    fontWeight: "500",
+    marginTop: 10
   },
-  listButtonStyle: {
-    backgroundColor: '#fff',
-    borderColor: '#A32638',
-    borderWidth: 1,
-    paddingVertical: 10,
-    marginBottom: 5,
-  },
-  listButtonContentStyle: {
 
+  categoryButtonView: {
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
-  listButtonLabelStyle: {
-    color: '#A32638',
+  categoryButtonStyle: {
+    marginVertical: 5,
+    marginRight: 5,
+    backgroundColor: '#d6d6d6',
+    paddingTop: 10,
+  },
+  categoryButtonContentStyle: {
+    flexDirection: 'column',
+    width: 84,
+  },
+  categoryButtonLabelStyle: {
+    fontSize: 15,
+    color: '#000000',
+  },
+  cardView: {
+  display: "flex",
+  flexDirection: "column",
+  flexWrap: "wrap",
+
+  marginTop: 15,
   },
   cardStyle: {
-    marginBottom: 5,
+    borderColor: "transparent",
+    width: "100%",
+    marginRight: 18,
+    marginBottom: 18,
+    borderWidth: 0
   },
-  cardContentStyle: {
-    paddingTop: 5,
+  cardCoverStyle: {
+    height: 140
+  
   },
+  cardContent: {
+    padding: 5
+  }, 
+  button: {
+    backgroundColor: "#A32638",
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000
+    
+  }
 });
