@@ -130,6 +130,21 @@ export const getEmail = async () => {
     return email_one;
 }
 
+export const getFirstName = async () => {
+    let email = user?.displayName;
+    let email_one = "this";
+    if(email == null){
+        email_one ='null'
+    }
+    else if(email == undefined){
+        email_one='undefined'
+    }
+    else{
+        email_one = email;
+    }
+    return email_one;
+}
+
 export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {

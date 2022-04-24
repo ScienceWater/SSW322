@@ -11,15 +11,19 @@ type ScreenProps = {
 
 const PostingsScreen = ({ route }: ScreenProps) => {
   const navigation = useNavigation();
-   const [items, setItems] = React.useState<Object[]>([]);
+  const [items, setItems] = React.useState<Object[]>([]);
 
-  const getItems = async () => {
+  
+
+  React.useEffect(() => {
+    const getItems = async () => {
     let result : Object[] = [];
-
-
     result = await getUserProducts();
     setItems(result);
   }
+
+  getItems();
+  }, []);
 
   const getItem = (item: any) => {
     return item;
@@ -37,8 +41,6 @@ const PostingsScreen = ({ route }: ScreenProps) => {
   }
 
   //console.log(items[1])
-
-  getItems()
 
 
   return (

@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     width: '100%',
-    height: Dimensions.get('screen').width * .9
+    height: Dimensions.get('screen').height * 1
 
   },
   textInput: {
