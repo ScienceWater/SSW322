@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS } from "react-native";
-import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-
+import { Avatar, Button, Card, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { getProducts } from '../services/firebase';
 
 type ScreenProps = {
   navigation: any
@@ -13,7 +13,13 @@ const Cart = ({ navigation, route }: ScreenProps) => {
   return (
     <>
     <ScrollView>
-        <Text>Cart goes here.</Text>
+        <List.Item
+        title="test product"
+        description="test product description"
+        //onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}
+        style={styles.listItem}
+        left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
+        />
     </ScrollView>
     </>
   );
@@ -22,5 +28,9 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 export default Cart;
 
 const styles = StyleSheet.create({
-
+  
+  listItem: {
+    borderWidth: 5,
+    borderColor: '#A32638',
+    },
 });

@@ -115,6 +115,39 @@ export const addNewProduct = async (
     }
 }
 
+export const addToCart = async(item: any,user: any) => {
+    try {
+        const cartItemData = {
+            ref: '/products/' + item
+        }
+        const docRef = await addDoc(collection(firestore, "users", user, "cart"), cartItemData);
+        console.log(docRef.id);  
+    } catch (e) {
+        console.log(e);
+    }
+}   
+
+export const getCartItems = async(user: any) => {
+    let cartItems: Object[] = [];
+    try{
+        const q = query(
+            collection(firestore, "users", user, "cart")
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            cartItems.push({
+                item_name: data['item_name'],
+                description: data['description'],
+                imageURL: data['imageURL'],
+            });
+        });
+    } catch (e) {
+    console.log(e);
+}
+    return cartItems;
+}
+
 export const getEmail = async () => {
     let email = user?.email;
     let email_one = "this";

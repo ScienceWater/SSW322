@@ -1,6 +1,8 @@
+import { useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { View, ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, Image, SafeAreaView, Dimensions} from "react-native";
 import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { addNewProduct, addToCart } from "../services/firebase";
 
 type ScreenProps = {
   navigation: any
@@ -195,12 +197,13 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
 
                 </View>
               </ScrollView>
-              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product, 'Er7rJeDWNoPbMXHrDPvh'), navigation.navigate("Cart")}} >Add to Cart</Button>
             </SafeAreaView>
             </>
             )
           }
 }
+
 
 export default ProductScreen;
 
