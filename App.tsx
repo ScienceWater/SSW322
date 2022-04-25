@@ -11,7 +11,9 @@ import PostingsScreen from './screens/postings';
 import addProductScreen from "./screens/addProduct";
 import ProductScreen from './screens/product';
 import Cart from "./screens/cart"
+import ChooseCateg from "./screens/chooseCateg"
 const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   return (
@@ -25,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Postings" component={PostingsScreen} />
         <Stack.Screen name="addProduct" component={addProductScreen} />
+        <Stack.Screen name="ChooseCateg" component={ChooseCateg} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,8 +3,7 @@ import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyl
 import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import BrowseScreen from './browse';
 import PostingsScreen from './postings';
-import AddProductScreen from './addProduct';
-
+import Account from "./account"
 import Cart from "./cart";
 import ChooseCateg from './chooseCateg';
 
@@ -12,7 +11,7 @@ const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} /
 const CartRoute = () => <Cart navigation={undefined} route={undefined}/>;
 const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
 const ListProductRoute = () => <ChooseCateg />;
-const AccountRoute = () => <Text>Account</Text>;
+const AccountRoute = () => <Account/>;
 
 type ScreenProps = {
   navigation: any

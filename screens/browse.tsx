@@ -62,6 +62,7 @@ const BrowseScreen = ({ route }: ScreenProps) => {
         placeholder="Search items"
         onChangeText={onChangeSearch}
         value={searchQuery}
+        style={styles.searchBar}
       />
 
       <Subheading style={styles.subheading}>Categories</Subheading>
@@ -181,14 +182,19 @@ const styles = StyleSheet.create({
   },
   headline: {
     paddingBottom: 5,
+    paddingTop: 5,
+    fontWeight: "600",
+    color: "#A32638"
   },
   subheading: {
     fontSize: 20,
     marginTop: 5,
+    marginBottom: 10
   },
   categoryButtonView: {
     flexDirection: 'row',
-    alignSelf: 'center',
+    display: "flex",
+    justifyContent: 'space-between'
   },
   categoryButtonStyle: {
     marginVertical: 5,
@@ -197,8 +203,10 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   categoryButtonContentStyle: {
-    flexDirection: 'column',
-    width: 84,
+    display: 'flex',
+    flexDirection: "column",
+    alignContent: "center",
+    width: 90,
   },
   categoryButtonLabelStyle: {
     fontSize: 15,
@@ -223,5 +231,13 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: 5
+  },
+  searchBar: {
+    shadowOpacity: 0,
+    borderWidth: 1,
+    borderRadius: 35,
+    borderColor: "#A32638",
+    marginTop: 7,
+    marginBottom: 10
   }
 });

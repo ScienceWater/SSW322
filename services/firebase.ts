@@ -6,8 +6,6 @@ import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
 
-
-
 const firebaseConfig = {
     apiKey: Constants.manifest?.extra?.firebaseApiKey,
     authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
@@ -84,7 +82,7 @@ export const addNewProduct = async (
     Description: string, imageURL: string, Email: string,
     Width: string, Height: string, Depth: string,
     ISBN: string, Brand: String, Serial: String, 
-    Sport: String, Author: String
+    Sport: String, Author: String, Weight: String, Color: string, Size: string, CourseNumber: string
     ) => {
     try {
         const productData = {
@@ -105,6 +103,10 @@ export const addNewProduct = async (
             Serial: Serial,
             Sport: Sport,
             Author: Author,
+            weight: Weight,
+            Color: Color,
+            Size: Size,
+            CourseNumber: CourseNumber
         }
         const docRef = await addDoc(collection(firestore, "products", ), productData);
         console.log(docRef.id);
@@ -115,6 +117,21 @@ export const addNewProduct = async (
 
 export const getEmail = async () => {
     let email = user?.email;
+    let email_one = "this";
+    if(email == null){
+        email_one ='null'
+    }
+    else if(email == undefined){
+        email_one='undefined'
+    }
+    else{
+        email_one = email;
+    }
+    return email_one;
+}
+
+export const getFirstName = async () => {
+    let email = user?.displayName;
     let email_one = "this";
     if(email == null){
         email_one ='null'
@@ -144,19 +161,54 @@ export const getProducts = async (category: string, item_name: string) => {//, p
                 item_name: data['item_name'],
                 price: data['price'],
                 description: data['description'],
-                color: data['color'],
-                dimensions: data['dimensions'],
+                Color: data['Color'],
+                dimensions: data.dimensions,
                 weight: data['weight'],
-                size: data['size'],
-                edition: data['edition'],
-                course_number: data['course_number'],
-                model: data['model'],
+                size: data['Size'],
+                course_number: data['CourseNumber'],
+                serial: data['Serial'],
                 imageURL: data['imageURL'],
+                brand: data['Brand'],
+                isbn: data['ISBN'],
+                author: data['Author'],
+                sport: data['Sport']
             });
+
         });
     } catch (e) {
         console.log(e);
     }
+    return products;
+}
+
+export const getUserProducts = async () => {
+    let products: Object[] = [];
+    let email = await getEmail();
+    const q = query(collection(firestore, "products"), where("sellersEmail", "==", email));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        products.push({
+            category: data['category'],
+            item_name: data['item_name'],
+            price: data['price'],
+            description: data['description'],
+            Color: data['Color'],
+            dimensions: data.dimensions,
+            weight: data['weight'],
+            size: data['Size'],
+            course_number: data['CourseNumber'],
+            serial: data['Serial'],
+            imageURL: data['imageURL'],
+            brand: data['Brand'],
+            isbn: data['ISBN'],
+            author: data['Author'],
+            sport: data['Sport']
+     
+        })
+    });
+
     return products;
 }
 

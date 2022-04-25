@@ -8,7 +8,7 @@ type ScreenProps = {
 }
 
 const ProductScreen = ({ navigation, route }: ScreenProps) => {
-  if (route.params.product.category === "clothing") {
+  if (route.params.product.category === "Clothing") {
 
     return (
       <>
@@ -36,7 +36,8 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             <Text style={styles.heading}>Product Details</Text>
             <Text style={styles.description}>Category: {route.params.product.category}</Text>
             <Text style={styles.description}>Size: {route.params.product.size}</Text>
-            <Text style={styles.description}>Color: {route.params.product.color}</Text>
+            <Text style={styles.description}>Color: {route.params.product.Color}</Text>
+            <Text style={styles.description}>Clothing Brand: {route.params.product.brand}</Text>
           </View>
         </ScrollView>
         <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
@@ -44,7 +45,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
       </>
       )
 
-  } else if (route.params.product.category === "electronics") {
+  } else if (route.params.product.category === "Electronic") {
 
     return (
       <>
@@ -71,8 +72,12 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                 />
             <Text style={styles.heading}>Product Details</Text>
             <Text style={styles.description}>Category: {route.params.product.category}</Text>
-            <Text style={styles.description}>Dimensions: {route.params.product.dimensions}</Text>
-            <Text style={styles.description}>Model: {route.params.product.model}</Text>
+            <View  style={{display: "flex", flexDirection: "row", justifyContent: "flex-start"}} >
+              <Text style={styles.description}>Width: {route.params.product.dimensions.width}</Text>
+              <Text style={styles.description}>Height: {route.params.product.dimensions.height}</Text>
+              <Text style={styles.description}>Depth: {route.params.product.dimensions.depth}</Text>
+            </View>
+            <Text style={styles.description}>Model Serial #: {route.params.product.serial}</Text>
             <Text style={styles.description}>Weight: {route.params.product.weight}</Text>
             
           </View>
@@ -81,7 +86,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
       </SafeAreaView>
       </>
       )
-    } else if (route.params.product.category === "books") {
+    } else if (route.params.product.category === "Book") {
 
       return (
         <>
@@ -108,16 +113,16 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
               />
               <Text style={styles.heading}>Product Details</Text>
               <Text style={styles.description}>Category: {route.params.product.category}</Text>
-              <Text style={styles.description}>Edition: {route.params.product.edition}</Text>
+              <Text style={styles.description}>ISBN: {route.params.product.isbn}</Text>
+              <Text style={styles.description}>Author: {route.params.product.author}</Text>
               <Text style={styles.description}>Course Number: {route.params.product.course_number}</Text>
-              
             </View>
           </ScrollView>
           <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
         </SafeAreaView>
         </>
         )
-      } else if (route.params.product.category === "furniture") {
+      } else if (route.params.product.category === "Furniture") {
 
         return (
           <>
@@ -144,8 +149,12 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                 />
                 <Text style={styles.heading}>Product Details</Text>
                 <Text style={styles.description}>Category: {route.params.product.category}</Text>
-                <Text style={styles.description}>Dimensions: {route.params.product.dimensions}</Text>
-                <Text style={styles.description}>Color: {route.params.product.color}</Text>
+                <View  style={{display: "flex", flexDirection: "row", justifyContent: "flex-start"}} >
+                  <Text style={styles.description}>Width: {route.params.product.dimensions.width}</Text>
+                  <Text style={styles.description}>Height: {route.params.product.dimensions.height}</Text>
+                  <Text style={styles.description}>Depth: {route.params.product.dimensions.depth}</Text>
+                </View>
+                <Text style={styles.description}>Color: {route.params.product.Color}</Text>
                 <Text style={styles.description}>Weight: {route.params.product.weight}</Text>
                 
               </View>
@@ -154,7 +163,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
           </SafeAreaView>
           </>
           )
-        } else if (route.params.product.category === "sports gear") {
+        } else if (route.params.product.category === "Sports gear") {
 
           return (
             <>
@@ -181,9 +190,9 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                   />
                   <Text style={styles.heading}>Product Details</Text>
                   <Text style={styles.description}>Category: {route.params.product.category}</Text>
-    
                   <Text style={styles.description}>Weight: {route.params.product.weight}</Text>
-                  
+                  <Text style={styles.description}>Sport: {route.params.product.sport}</Text>
+
                 </View>
               </ScrollView>
               <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
@@ -233,6 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#AAAAAA',
     marginBottom: 5,
+    marginRight: 15,
     lineHeight: 30
   },
   button: {

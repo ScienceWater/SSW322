@@ -18,9 +18,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
   const [itemName, setItemName] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [Description, setDescription] = React.useState("");
-  const [Category, setCategory] = React.useState("");
-  const [showDropDown, setShowDropDown] = React.useState(false);
-  const [showDropDown1, setShowDropDown1] = React.useState(false);
   const [Width, setWidth] = React.useState("");
   const [Height, setHeight] = React.useState("");
   const [Depth, setDepth] = React.useState("");
@@ -29,12 +26,37 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
   const [Sport, setSport] = React.useState("");
   const [ISBN, setISBN] = React.useState("");
   const [Author, setAuthor] = React.useState("");
+  const [Weight, setWeight] = React.useState("");
+  const [Color, setColor] = React.useState("");
+  const [Size, setSize] = React.useState("");
+  const [CourseNumber, setCourseNumber] = React.useState("");
   const inputEl = useRef(null);
 
   const handleInputSerial= useCallback((ev) => {
     const input =  ev.nativeEvent.text;
     setSerial(input)
   }, [setSerial]);
+
+  const handleInputCourseNumber= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setCourseNumber(input)
+  }, [setCourseNumber]);
+
+  const handleInputSize = useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setSize(input)
+  }, [setSize]);
+
+  const handleInputColor= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setColor(input)
+  }, [setColor]);
+
+  const handleInputWeight= useCallback((ev) => {
+    const input =  ev.nativeEvent.text;
+    setWeight(input)
+  }, [setWeight]);
+
 
   const handleInputWidth= useCallback((ev) => {
     const input =  ev.nativeEvent.text;
@@ -159,45 +181,62 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
     }
   };
 
-  const DiffInputs = () =>{
-
+  const DiffInputs = () => {
     if(route.params.category == 'Furniture'){
       return (
         <>
-        <TextInput
-              label="Width"
-              mode="outlined"
-              activeOutlineColor='#A32638'
-              style={styles.textInput} 
-              keyboardType = 'numeric'
-              defaultValue={Width}
-              onEndEditing={ handleInputWidth }
-          />
-
+          <View  style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+            <TextInput
+                label="Width"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Width}
+                onEndEditing={ handleInputWidth }
+            />
+            <TextInput
+                label="Height"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Height} 
+                onEndEditing={handleInputHeight}
+            />
+            <TextInput
+                label="Depth"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Depth} 
+                onEndEditing={handleInputDepth}
+            />
+          </View>
           <TextInput
-              label="Height"
+              label="Weight"
               mode="outlined"
               activeOutlineColor='#A32638'
               style={styles.textInput} 
               keyboardType = 'numeric'
-              defaultValue={Height} 
-              onEndEditing={handleInputHeight}
+              onEndEditing={handleInputWeight}
+              defaultValue={Weight}
           />
-
-          <TextInput
-              label="Depth"
+           <TextInput
+              label="Color"
               mode="outlined"
               activeOutlineColor='#A32638'
               style={styles.textInput} 
               keyboardType = 'numeric'
-              defaultValue={Depth} 
-              onEndEditing={handleInputDepth}
+              onEndEditing={handleInputColor}
+              defaultValue={Color}
           />
           </>
       );
     }
     if(route.params.category == "Electronic"){
-      return(
+      return(<>
         <TextInput
               label="Serial number"
               mode="outlined"
@@ -207,22 +246,82 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               onEndEditing={handleInputSerial}
               defaultValue={Serial}
           />
+          <TextInput
+              label="Weight"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              onEndEditing={handleInputWeight}
+              defaultValue={Weight}
+          />
+          <View  style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}} >
+            <TextInput
+                label="Width"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Width}
+                onEndEditing={ handleInputWidth }
+            />
+            <TextInput
+                label="Height"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Height} 
+                onEndEditing={handleInputHeight}
+            />
+            <TextInput
+                label="Depth"
+                mode="outlined"
+                activeOutlineColor='#A32638'
+                style={styles.textInput} 
+                keyboardType = 'numeric'
+                defaultValue={Depth} 
+                onEndEditing={handleInputDepth}
+            />
+          </View>
+        </>
       );
     }
     if(route.params.category == "Clothing"){
       return(
-        <TextInput
-              label="Clothing Brand"
-              mode="outlined"
-              activeOutlineColor='#A32638'
-              style={styles.textInput} 
-              defaultValue={Brand} 
-              onEndEditing={handleInputBrand}
+        <>
+          <TextInput
+            label="Clothing Brand"
+            mode="outlined"
+            activeOutlineColor='#A32638'
+            style={styles.textInput} 
+            defaultValue={Brand} 
+            onEndEditing={handleInputBrand}
           />
+          <TextInput
+            label="Color"
+            mode="outlined"
+            activeOutlineColor='#A32638'
+            style={styles.textInput} 
+            keyboardType = 'numeric'
+            onEndEditing={handleInputColor}
+            defaultValue={Color}
+          />
+         <TextInput
+            label="Size"
+            mode="outlined"
+            activeOutlineColor='#A32638'
+            style={styles.textInput} 
+            keyboardType = 'numeric'
+            onEndEditing={handleInputSize}
+            defaultValue={Size}
+          />
+      </>
       );
     }
     if(route.params.category == "Sports gear"){
       return(
+        <>
         <TextInput
               label="Sport"
               mode="outlined"
@@ -232,6 +331,16 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               defaultValue={Sport} 
               onEndEditing={handleInputSport}
           />
+          <TextInput
+              label="Weight"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              keyboardType = 'numeric'
+              onEndEditing={handleInputWeight}
+              defaultValue={Weight}
+          />
+        </>
       );
     }
     if(route.params.category == "Book"){
@@ -246,7 +355,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               defaultValue={ISBN} 
               onEndEditing={handleInputISBN}
           />
-
           <TextInput
               label="Author"
               mode="outlined"
@@ -254,6 +362,14 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               style={styles.textInput} 
               defaultValue={Author} 
               onEndEditing={handleInputAuthor}
+          />
+          <TextInput
+              label="Course Number"
+              mode="outlined"
+              activeOutlineColor='#A32638'
+              style={styles.textInput} 
+              defaultValue={CourseNumber} 
+              onEndEditing={handleInputCourseNumber}
           />
         </>
       );
@@ -325,12 +441,13 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
           <Button icon="check" style={styles.button} mode="contained" onPress={async () => {
             let usersEmail = await getEmail()
             const Category = route.params.category;
-
             addNewProduct(
               itemName, Category, price, Description, image, usersEmail, 
-              Width, Height, Depth, ISBN, Brand, Serial, Sport, Author
-              )
-            }}>List Item</Button>
+              Width, Height, Depth, ISBN, Brand, Serial, Sport, Author, Weight, Color, Size, CourseNumber
+            );
+              //navigation.navigate("Home")  
+            }    
+            }>List Item</Button>
      
     </View>
     </ScrollView>
@@ -344,11 +461,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     width: '100%',
+    height: Dimensions.get('screen').height * 1
 
   },
   textInput: {
     marginTop: 15,
     color: "#A32638",
+    minWidth: "30%"
   
   },
   containerStyle: {
