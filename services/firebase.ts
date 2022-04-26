@@ -161,19 +161,20 @@ export const addToCart = async (item: any) => {
     try {
         console.log('inside try');
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
-        // const q = query(collection(firestore, "users"), where("email", "==", user));
-        // let userRef: DocumentReference;
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
 
-        // const querySnapshot = await getDocs(q);
-        // querySnapshot.forEach((doc) => {
-        //     userRef = doc;
-        // })
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+            userDocId = doc.id as string;
+        });
+        let userRef = doc(firestore, "users", userDocId);
 
         // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
-        // const userRef = doc(firestore, "users");
-        // await updateDoc(userRef, {
-        //     cart: arrayUnion(item)
-        // })
+        await updateDoc(userRef, {
+            cart: arrayUnion("/products/etSHGrfLN7z7HhlohwrR")
+        })
     } catch (e) {
         console.log(e);
     }
