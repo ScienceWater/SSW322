@@ -166,7 +166,7 @@ export const addToCart = async (item: any) => {
         });
         let userRef = doc(firestore, "users", userDocId);
         // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
-        let productPath = 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
+        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
 
         // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
         await updateDoc(userRef, {
@@ -252,7 +252,7 @@ export const findCartItemA = async (productId: string, field: string) => {
     } catch (e) {
         console.log(e);
     }
-    console.log(productData);
+    console.log("findCartItemA: " + productData);
     return productData;
 }
 
@@ -319,6 +319,7 @@ export const getProducts = async (category: string, item_name: string) => {//, p
             if ((data['category'].toString() === category && data['item_name'].toString().toLowerCase().includes(item_name.toLowerCase())) ||
                 (category === '' && data['item_name'].toString().toLowerCase().includes(item_name.toLowerCase())))
             products.push({
+                productId: doc.id,
                 category: data['category'],
                 item_name: data['item_name'],
                 price: data['price'],
@@ -333,7 +334,7 @@ export const getProducts = async (category: string, item_name: string) => {//, p
                 brand: data['Brand'],
                 isbn: data['ISBN'],
                 author: data['Author'],
-                sport: data['Sport']
+                sport: data['Sport'],
             });
 
         });

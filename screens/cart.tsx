@@ -10,12 +10,20 @@ type ScreenProps = {
 }
 
 let cartItemIds: string[] = [];
+let itemNames: string[] = [];
+let itemPrices: string[] = [];
+let itemImageURLs: string[] = [];
 
 const Cart = ({ navigation, route }: ScreenProps) => {
 
   const updateCartItems = async () => {
     console.log('inside updateCartItems');
     cartItemIds = await getCartItems();
+    cartItemIds.forEach(function (cartItem) {
+      getItemName(cartItem);
+      getPrice(cartItem);
+      getImage(cartItem);
+    });
     return cartItemIds;
   }
 
@@ -25,17 +33,23 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 
   const getItemName = async (item: any) => {
     let itemData = await findCartItemA(item, 'item_name');
+    console.log("getItemName: " + itemData);
+    itemNames.push(itemData);
     return itemData;
   }
 
   const getPrice = async (item: any) => {
     let itemData = await findCartItemA(item, 'price');
+    console.log("getItemPrice: " + itemData);
+    itemPrices.push(itemData);
     return itemData;
   }
 
   const getImage = async (item: any) => {
     try {
       let itemData = await findCartItemA(item, 'imageURL');
+      console.log("getItemImageURL: " + itemData);
+      itemImageURLs.push(itemData);
       return itemData;
     } catch (e) {
       console.log(e);
@@ -44,6 +58,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
   }
 
   updateCartItems();
+
 
   return (
     <>
@@ -61,16 +76,18 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 
     {/* List Item Real View */}
     <ScrollView>
+      {/* <View> */}
         {cartItemIds.map((item, i) => { return (
           <List.Item
-            // title = {getItemName(item)}
-            // description = {getPrice(item)}
-            // style = {styles.listItem}
-            // // left = {props => <Avatar.Image size={48} source={require(getImage(item))}/>}
-            title = 'test'
-            description = "desc"
+            title = {itemNames[i]}
+            description = {itemPrices[i]}
+            style = {styles.listItem}
+            // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
+            // title = 'test'
+            // description = "desc"
           />
         )})}
+      {/* </View> */}
     </ScrollView>
 
     {/* Card Real View */}
