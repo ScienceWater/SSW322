@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { findCartItem, findCartItemA, getCartItems, getProducts } from '../services/firebase';
+import { findCartItemA, getCartItems, getProducts } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -49,7 +49,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
     <>
 
     {/* List Item Test View */}
-    <ScrollView>
+    {/* <ScrollView>
       <List.Item
         title="test product"
         description="test product description"
@@ -57,7 +57,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
         style={styles.listItem}
         left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
       />
-    </ScrollView>
+    </ScrollView> */}
 
     {/* List Item Real View */}
     <ScrollView>
