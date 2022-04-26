@@ -1,7 +1,7 @@
 import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -115,12 +115,15 @@ export const addNewProduct = async (
     }
 }
 
-export const addToCart = async(item: any,user: any) => {
+export const addToCart = async(item: any) => {
+    const userID: string = user?.uid.toString()!;
+    console.log('inside addToCart');
+
     try {
         const cartItemData = {
-            ref: '/products/' + item
+            ref: '/products/Kv90wavhhLpaDw0FdBrE' // + item.toString()
         }
-        const docRef = await addDoc(collection(firestore, "users", user, "cart"), cartItemData);
+        const docRef = await addDoc(collection(firestore, "users", userID, "cart"), cartItemData);
         console.log(docRef.id);  
     } catch (e) {
         console.log(e);
@@ -132,19 +135,24 @@ export const getCartItems = async() => { // async(user: any) => {
     // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
     const userID: string = user?.uid.toString()!;
     let cartItems: Object[] = [];
+    
+    console.log('inside getCartItems lol'); // doesn't work
 
     try {
         const q = query(
-            collection(firestore, "users", userID, "cart")
             // collection(firestore, "users", user, "cart")
+            collection(firestore, "users", userID, "cart")
         );
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach( async (doc) => {
             let data = doc.data();
+            let ref = data['ref'];
+            const docSnap = await getDoc(ref);
+            let docData = docSnap.data();
             cartItems.push({
-                item_name: data['item_name'],
-                description: data['description'],
-                imageURL: data['imageURL'],
+                // item_name: docData['item_name'],
+                // description: docData['description'],
+                // imageURL: docData['imageURL'],
             });
         });
     } catch (e) {

@@ -197,7 +197,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
 
                 </View>
               </ScrollView>
-              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product, 'Er7rJeDWNoPbMXHrDPvh'), navigation.navigate("Cart")}} >Add to Cart</Button>
+              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart"), console.log('add to cart pressed!')}}>Add to Cart</Button>
             </SafeAreaView>
             </>
             )
