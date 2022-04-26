@@ -152,6 +152,7 @@ export const addToCart = async (item: any) => {
     console.log('item.data(): ' + item.data);
     console.log('item.item_name: ' + item.item_name);
     console.log('item.path: ' + item.path);
+
     try {
         console.log('inside try');
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
@@ -177,28 +178,50 @@ export const addToCart = async (item: any) => {
 // Returns a list of all items in the cart of the user that is currently logged in
 export const getCartItems = async() => { // async(user: any) => {
     // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
-    const userID: string = user?.uid.toString()!;
-    let cartItems: Object[] = [];
-    
+    // const userID: string = user?.uid.toString()!;
     console.log('inside getCartItems lol'); // doesn't work
+    let cartItems: Object[] = [];
 
     try {
-        const q = query(
-            // collection(firestore, "users", user, "cart")
-            collection(firestore, "users", userID, "cart")
-        );
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach( async (doc) => {
-            let data = doc.data();
-            let ref = data['ref'];
-            const docSnap = await getDoc(ref);
-            let docData = docSnap.data();
-            cartItems.push({
-                // item_name: docData['item_name'],
-                // description: docData['description'],
-                // imageURL: docData['imageURL'],
-            });
+
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const qOne = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
+
+        const querySnapshot = await getDocs(qOne);
+        querySnapshot.forEach((doc) => {
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
+            userDocId = doc.id as string;
         });
+        let userRef = doc(firestore, "users", userDocId);
+
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+            console.log(userSnap.data().first_name);
+            // console.log(userSnap.data().cart);
+            userSnap.data().cart.forEach(function (cartItem: any) {
+                console.log(cartItem._key.path.segments[5], cartItem._key.path.segments[6]); // .path.segments[5]);
+            });
+        } else {
+            console.log("No such document!");
+        }
+
+        // const qTwo = query(
+        //     collection(firestore, "users", userRef, "cart")
+        // );
+        // const querySnapshot = await getDocs(q);
+        // querySnapshot.forEach( async (doc) => {
+        //     let data = doc.data();
+        //     let ref = data['ref'];
+        //     const docSnap = await getDoc(ref);
+        //     let docData = docSnap.data();
+        //     cartItems.push({
+        //         // item_name: docData['item_name'],
+        //         // description: docData['description'],
+        //         // imageURL: docData['imageURL'],
+        //     });
+        // });
     } catch (e) {
         console.log(e);
     }
