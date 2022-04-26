@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle, ScrollView } from 'react-native';
-import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
+import {  Avatar, BottomNavigation, Button, Card, Chip, Headline, Menu, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
 import {useNavigation} from '@react-navigation/native'
 
@@ -68,78 +68,53 @@ const BrowseScreen = ({ route }: ScreenProps) => {
       <Subheading style={styles.subheading}>Categories</Subheading>
 
       <View style={styles.categoryButtonView}>
-        <Button
-          icon="bed-empty"
-          onPress={() => {
-            if (category === "furniture")
+        <Chip style={styles.categoryButtonStyle} icon="sofa" onPress={() => {
+              if (category === "Furniture")
+                category = "";
+              else
+                category = "Furniture";
+                navigation.navigate("BrowseByCategory", {
+                  category: category
+                })
+          }}>Furniture</Chip>
+        <Chip style={styles.categoryButtonStyle} icon="book" onPress={() => {
+              if (category === "Book")
+                category = "";
+              else
+              category = "Book";
+              navigation.navigate("BrowseByCategory", {
+                category: category
+              })
+          }} >Books</Chip>
+        <Chip style={styles.categoryButtonStyle} icon="tie"  onPress={() => {
+              if (category === "Clothing")
+                category = "";
+              else
+                category = "Clothing";
+                navigation.navigate("BrowseByCategory", {
+                  category: category
+                })
+          }}>Clothing</Chip>
+        <Chip style={styles.categoryButtonStyle} icon="laptop" onPress={() => {
+              if (category === "Electronic")
+                category = "";
+              else
+                category = "Electronic";
+                navigation.navigate("BrowseByCategory", {
+                  category: category
+                })
+          }}>Electronics </Chip>
+        <Chip style={styles.categoryButtonStyle} icon="soccer" onPress={() => {
+            if (category === "Sport")
               category = "";
             else
-              category = "furniture";
-            search(category, searchQuery);
-        }}        
-        
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Furniture
-        </Button>
-        
-        <Button
-          icon="book"
-          onPress={() => {
-            if (category === "Books")
-              category = "";
-            else
-              category = "Books";
-            search(category, searchQuery);
-        }}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Books
-        </Button>
-    
-    {/* <Text>Hi {route.params.firstName}</Text>
-    <MyButton text="AddItem" onPressFn={() => navigation.navigate("addProduct", {email: route.params.firstName})}/> */}
-
-        <Button
-          icon="hanger"
-          onPress={() => {
-            if (category === "Clothing")
-              category = "";
-            else
-              category = "Clothing";
-            search(category, searchQuery);
-        }}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Clothing
-        </Button>
-
-        <Button
-          icon="lightbulb"
-          onPress={() => {
-            if (category === "electronics")
-              category = "";
-            else
-              category = "electronics";
-            search(category, searchQuery);
-        }}
-          mode="contained"
-          compact={true}
-          style={styles.categoryButtonStyle}
-          contentStyle={styles.categoryButtonContentStyle}
-          labelStyle={styles.categoryButtonLabelStyle}>
-          Electronics
-        </Button>
+              category = "Sport";
+              navigation.navigate("BrowseByCategory", {
+                category: category
+              })
+        }}>Sports Gear</Chip>
       </View>
+
 
       <Subheading style={styles.subheading}>Recommended</Subheading>
       
@@ -194,30 +169,23 @@ const styles = StyleSheet.create({
   categoryButtonView: {
     flexDirection: 'row',
     display: "flex",
-    justifyContent: 'space-between'
+    flexWrap: "wrap"
   },
   categoryButtonStyle: {
-    marginVertical: 5,
-    marginRight: 5,
-    backgroundColor: '#d6d6d6',
-    paddingTop: 10,
-  },
-  categoryButtonContentStyle: {
-    display: 'flex',
-    flexDirection: "column",
-    alignContent: "center",
-    width: 90,
-  },
-  categoryButtonLabelStyle: {
-    fontSize: 15,
-    color: '#000000',
+    marginRight: 10,
+    marginBottom: 10,
+    backgroundColor: '#ebebeb',
+    paddingLeft: 13, 
+    paddingRight: 13, 
+    paddingTop: 3,
+    paddingBottom: 3,
   },
   cardView: {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  marginLeft: 10,
-  marginTop: 15,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginLeft: 10,
+    marginTop: 15,
   },
   cardStyle: {
     borderColor: "transparent",
@@ -239,5 +207,5 @@ const styles = StyleSheet.create({
     borderColor: "#A32638",
     marginTop: 7,
     marginBottom: 10
-  }
+  },
 });

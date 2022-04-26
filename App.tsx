@@ -12,6 +12,7 @@ import addProductScreen from "./screens/addProduct";
 import ProductScreen from './screens/product';
 import Cart from "./screens/cart"
 import ChooseCateg from "./screens/chooseCateg"
+import BrowseByCategory from './screens/browseByCategory';
 const Stack = createNativeStackNavigator();
 
 
@@ -28,6 +29,7 @@ export default function App() {
         <Stack.Screen name="Postings" component={PostingsScreen} />
         <Stack.Screen name="addProduct" component={addProductScreen} />
         <Stack.Screen name="ChooseCateg" component={ChooseCateg} />
+        <Stack.Screen name="BrowseByCategory" component={BrowseByCategory} />
       </Stack.Navigator>
     </NavigationContainer>
   );
