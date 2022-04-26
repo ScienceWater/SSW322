@@ -147,12 +147,6 @@ export const addNewProduct = async (
 // Second attempt at addToCart (using `cart` array field inside `user` doc)
 export const addToCart = async (item: any) => {
     console.log('inside addToCart');
-    console.log('user: ' + user);
-    console.log('user.uid: ' + user?.uid);
-    console.log('user.getIdToken: ' + user?.getIdToken);
-    console.log('user.getIdTokenResult: ' + user?.getIdTokenResult);
-    console.log('user.tenantId: ' + user?.tenantId);
-    console.log('user providerId: ' + user?.providerId);
     console.log('item: ' + item);
     console.log('item.id: ' + item.id);
     console.log('item.data(): ' + item.data);
@@ -166,7 +160,7 @@ export const addToCart = async (item: any) => {
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
             userDocId = doc.id as string;
         });
         let userRef = doc(firestore, "users", userDocId);
