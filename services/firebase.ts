@@ -1,7 +1,7 @@
 import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -115,32 +115,62 @@ export const addNewProduct = async (
     }
 }
 
-export const addToCart = async(item: any) => {
-    console.log('inside addToCart');
-    const q = query(collection(firestore, "users"), where("email", "==", user));
-    console.log('inside addToCart');
-    const querySnapshot = await getDocs(q);
-    console.log('inside addToCart');
-    let userID = '';
-    console.log('inside addToCart');
-    querySnapshot.forEach((doc) => {
-        userID = doc.id;
-        console.log('inside addToCart');
-    });
-    //const userID: string = user?.uid.toString()!;
+// First attempt at addToCart (using `cart` collection inside `user` doc)
+// export const addToCart = async(item: any) => {
+//     console.log('inside addToCart');
+//     const q = query(collection(firestore, "users"), where("email", "==", user));
+//     console.log('inside addToCart');
+//     const querySnapshot = await getDocs(q);
+//     console.log('inside addToCart');
+//     let userID = '';
+//     console.log('inside addToCart');
+//     querySnapshot.forEach((doc) => {
+//         userID = doc.id;
+//         console.log('inside addToCart');
+//     });
+//     // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
+//     // const userID: string = user?.uid.toString()!;
     
-    console.log('userID' + userID);
+//     console.log('userID' + userID);
+//     try {
+//         // const arbit = .collection('users'))
+//         const cartItemData = {
+//             ref: '/products/Kv90wavhhLpaDw0FdBrE' // + item.toString()
+//         }
+//         const docRef = await addDoc(collection(firestore, "users", userID, "cart"), cartItemData);
+//         console.log(docRef.id);  
+//     } catch (e) {
+//         console.log(e);
+//     }
+// }
+
+// Second attempt at addToCart (using `cart` array field inside `user` doc)
+export const addToCart = async (item: any) => {
+    console.log('inside addToCart');
+    console.log('user: ' + user);
+    console.log('user.uid: ' + user?.uid);
+    console.log('item: ' + item);
+    console.log('item.item_name: ' + item.item_name);
     try {
-        //const arbit = .collection('users'))
-        const cartItemData = {
-            ref: '/products/Kv90wavhhLpaDw0FdBrE' // + item.toString()
-        }
-        const docRef = await addDoc(collection(firestore, "users", userID, "cart"), cartItemData);
-        console.log(docRef.id);  
+        console.log('inside try');
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        // const q = query(collection(firestore, "users"), where("email", "==", user));
+        // let userRef: DocumentReference;
+
+        // const querySnapshot = await getDocs(q);
+        // querySnapshot.forEach((doc) => {
+        //     userRef = doc;
+        // })
+
+        // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
+        // const userRef = doc(firestore, "users");
+        // await updateDoc(userRef, {
+        //     cart: arrayUnion(item)
+        // })
     } catch (e) {
         console.log(e);
     }
-}   
+}
 
 // Returns a list of all items in the cart of the user that is currently logged in
 export const getCartItems = async() => { // async(user: any) => {
