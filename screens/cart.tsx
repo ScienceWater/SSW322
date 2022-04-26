@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { findCartItem, findCartItemA, getCartItems, getProducts } from '../services/firebase';
+import { findCartItemA, getCartItems, getProducts } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -23,13 +23,13 @@ const Cart = ({ navigation, route }: ScreenProps) => {
   //   return item;
   // }
 
-  const getItemName = (item: any) => {
-    let itemData = findCartItemA(item, 'item_name');
+  const getItemName = async (item: any) => {
+    let itemData = await findCartItemA(item, 'item_name');
     return itemData;
   }
 
-  const getPrice = (item: any) => {
-    let itemData = findCartItemA(item, 'price');
+  const getPrice = async (item: any) => {
+    let itemData = await findCartItemA(item, 'price');
     return itemData;
   }
 
@@ -49,7 +49,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
     <>
 
     {/* List Item Test View */}
-    <ScrollView>
+    {/* <ScrollView>
       <List.Item
         title="test product"
         description="test product description"
@@ -57,20 +57,20 @@ const Cart = ({ navigation, route }: ScreenProps) => {
         style={styles.listItem}
         left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
       />
-    </ScrollView>
+    </ScrollView> */}
 
     {/* List Item Real View */}
     <ScrollView>
-      {/* <View> */}
         {cartItemIds.map((item, i) => { return (
           <List.Item
-            title = {getItemName(item)}
-            description = {getPrice(item)}
-            style = {styles.listItem}
-            // left = {props => <Avatar.Image size={48} source={require(getImage(item))}/>}
+            // title = {getItemName(item)}
+            // description = {getPrice(item)}
+            // style = {styles.listItem}
+            // // left = {props => <Avatar.Image size={48} source={require(getImage(item))}/>}
+            title = 'test'
+            description = "desc"
           />
         )})}
-      {/* </View> */}
     </ScrollView>
 
     {/* Card Real View */}

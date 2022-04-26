@@ -241,7 +241,7 @@ export const getCartItems = async() => { // async(user: any) => {
 
 export const findCartItemA = async (productId: string, field: string) => {
     let productData: string = '';
-
+    console.log('inside findcartitem');
     try {
         let docRef = doc(firestore, "products", productId);
         let docSnap = await getDoc(docRef);
@@ -252,26 +252,26 @@ export const findCartItemA = async (productId: string, field: string) => {
     } catch (e) {
         console.log(e);
     }
-
+    console.log(productData);
     return productData;
 }
 
-export const findCartItem = async (productId: string) => {
-    let productData: Object[] = [];
+// export const findCartItem = async (productId: string) => {
+//     let productData: Object[] = [];
 
-    try {
-        let docRef = doc(firestore, "products", productId);
-        let docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            let docData = docSnap.data();
-            productData.push(docData['item_name'], docData['price'], docData['imageURL']);
-        }
-    } catch (e) {
-        console.log(e);
-    }
+//     try {
+//         let docRef = doc(firestore, "products", productId);
+//         let docSnap = await getDoc(docRef);
+//         if (docSnap.exists()) {
+//             let docData = docSnap.data();
+//             productData.push(docData['item_name'], docData['price'], docData['imageURL']);
+//         }
+//     } catch (e) {
+//         console.log(e);
+//     }
 
-    return productData;
-}
+//     return productData;
+// }
 
 export const getEmail = async () => {
     let email = user?.email;
