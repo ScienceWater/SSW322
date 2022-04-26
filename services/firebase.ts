@@ -241,7 +241,7 @@ export const getCartItems = async() => { // async(user: any) => {
 
 export const findCartItemA = async (productId: string, field: string) => {
     let productData: string = '';
-
+    console.log('inside findcartitem');
     try {
         let docRef = doc(firestore, "products", productId);
         let docSnap = await getDoc(docRef);
@@ -252,7 +252,7 @@ export const findCartItemA = async (productId: string, field: string) => {
     } catch (e) {
         console.log(e);
     }
-
+    console.log(productData);
     return productData;
 }
 
