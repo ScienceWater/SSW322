@@ -149,7 +149,11 @@ export const addToCart = async (item: any) => {
     console.log('inside addToCart');
     console.log('user: ' + user);
     console.log('user.uid: ' + user?.uid);
+    console.log('user.getIdToken: ' + user?.getIdToken);
+    console.log('user.getIdTokenResult: ' + user?.getIdTokenResult);
+    console.log('user.tenantId: ' + user?.tenantId);
     console.log('item: ' + item);
+    console.log('item.id: ' + item.id);
     console.log('item.item_name: ' + item.item_name);
     try {
         console.log('inside try');

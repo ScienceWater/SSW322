@@ -18,7 +18,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
           <ScrollView style={styles.productCard}>
             <Image
               style={styles.image}
-              source={{ uri: route.params.product.imageURL}}
+              source={{uri: route.params.product.imageURL}}
             />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{route.params.product.item_name}</Text>
@@ -93,7 +93,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
           <ScrollView style={styles.productCard}>
             <Image
               style={styles.image}
-              source={{ uri: route.params.product.imageURL}}
+              source={{uri: route.params.product.imageURL}}
             />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{route.params.product.item_name}</Text>
