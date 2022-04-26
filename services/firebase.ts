@@ -165,11 +165,14 @@ export const addToCart = async (item: any) => {
             userDocId = doc.id as string;
         });
         let userRef = doc(firestore, "users", userDocId);
+        // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
+        let productPath = 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
 
         // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
         await updateDoc(userRef, {
-            cart: arrayUnion("/products/etSHGrfLN7z7HhlohwrR")
-        })
+            // cart: arrayUnion(productRef)
+            cart: arrayUnion(productPath)
+        });
     } catch (e) {
         console.log(e);
     }
@@ -183,7 +186,6 @@ export const getCartItems = async() => { // async(user: any) => {
     let cartItems: Object[] = [];
 
     try {
-
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
         const qOne = query(collection(firestore, "users"), where("email", "==", user?.email));
         let userDocId: string = '';
@@ -199,10 +201,10 @@ export const getCartItems = async() => { // async(user: any) => {
 
         if (userSnap.exists()) {
             console.log(userSnap.data().first_name);
-            // console.log(userSnap.data().cart);
-            userSnap.data().cart.forEach(function (cartItem: any) {
-                console.log(cartItem._key.path.segments[5], cartItem._key.path.segments[6]); // .path.segments[5]);
-            });
+            console.log(userSnap.data().cart);
+            // userSnap.data().cart.forEach(function (cartItem: any) {
+            //     console.log(cartItem._key.path.segments[5], cartItem._key.path.segments[6]);
+            // });
         } else {
             console.log("No such document!");
         }
