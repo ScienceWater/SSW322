@@ -128,8 +128,10 @@ export const addToCart = async(item: any,user: any) => {
 }   
 
 export const getCartItems = async(user: any) => {
+    let email = user?.email;
     let cartItems: Object[] = [];
-    try{
+    
+    try {
         const q = query(
             collection(firestore, "users", user, "cart")
         );
@@ -143,39 +145,44 @@ export const getCartItems = async(user: any) => {
             });
         });
     } catch (e) {
-    console.log(e);
-}
+        console.log(e);
+    }
+
     return cartItems;
 }
 
 export const getEmail = async () => {
     let email = user?.email;
     let email_one = "this";
-    if(email == null){
-        email_one ='null'
+
+    if (email == null) {
+        email_one = 'null'
     }
-    else if(email == undefined){
-        email_one='undefined'
+    else if (email == undefined) {
+        email_one = 'undefined'
     }
-    else{
+    else {
         email_one = email;
     }
+
     return email_one;
 }
 
 export const getFirstName = async () => {
-    let email = user?.displayName;
-    let email_one = "this";
-    if(email == null){
-        email_one ='null'
+    let name = user?.displayName;
+    let name_one = "this";
+
+    if (name == null) {
+        name_one = 'null'
     }
-    else if(email == undefined){
-        email_one='undefined'
+    else if (name == undefined) {
+        name_one = 'undefined'
     }
-    else{
-        email_one = email;
+    else {
+        name_one = name;
     }
-    return email_one;
+
+    return name_one;
 }
 
 export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
