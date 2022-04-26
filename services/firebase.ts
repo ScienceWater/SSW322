@@ -152,9 +152,12 @@ export const addToCart = async (item: any) => {
     console.log('user.getIdToken: ' + user?.getIdToken);
     console.log('user.getIdTokenResult: ' + user?.getIdTokenResult);
     console.log('user.tenantId: ' + user?.tenantId);
+    console.log('user providerId: ' + user?.providerId);
     console.log('item: ' + item);
     console.log('item.id: ' + item.id);
+    console.log('item.data(): ' + item.data);
     console.log('item.item_name: ' + item.item_name);
+    console.log('item.path: ' + item.path);
     try {
         console.log('inside try');
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)

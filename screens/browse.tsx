@@ -145,7 +145,9 @@ const BrowseScreen = ({ route }: ScreenProps) => {
       
       <ScrollView>
         <View style={styles.cardView}> 
-          {items.map((item, i) => { return (
+          {items.map((item, i) => {
+            console.log(getItem(item));
+            return (
             <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
               <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
               <Card.Content style={styles.cardContent}>
