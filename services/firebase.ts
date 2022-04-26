@@ -127,13 +127,16 @@ export const addToCart = async(item: any,user: any) => {
     }
 }   
 
-export const getCartItems = async(user: any) => {
-    let email = user?.email;
+// Returns a list of all items in the cart of the user that is currently logged in
+export const getCartItems = async() => { // async(user: any) => {
+    // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
+    const userID: string = user?.uid.toString()!;
     let cartItems: Object[] = [];
-    
+
     try {
         const q = query(
-            collection(firestore, "users", user, "cart")
+            collection(firestore, "users", userID, "cart")
+            // collection(firestore, "users", user, "cart")
         );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {

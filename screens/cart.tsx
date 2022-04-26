@@ -13,13 +13,13 @@ const Cart = ({ navigation, route }: ScreenProps) => {
   return (
     <>
     <ScrollView>
-        <List.Item
+      <List.Item
         title="test product"
         description="test product description"
         //onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}
         style={styles.listItem}
         left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
-        />
+      />
     </ScrollView>
     </>
   );
