@@ -116,10 +116,22 @@ export const addNewProduct = async (
 }
 
 export const addToCart = async(item: any) => {
-    const userID: string = user?.uid.toString()!;
     console.log('inside addToCart');
-
+    const q = query(collection(firestore, "users"), where("email", "==", user));
+    console.log('inside addToCart');
+    const querySnapshot = await getDocs(q);
+    console.log('inside addToCart');
+    let userID = '';
+    console.log('inside addToCart');
+    querySnapshot.forEach((doc) => {
+        userID = doc.id;
+        console.log('inside addToCart');
+    });
+    //const userID: string = user?.uid.toString()!;
+    
+    console.log('userID' + userID);
     try {
+        //const arbit = .collection('users'))
         const cartItemData = {
             ref: '/products/Kv90wavhhLpaDw0FdBrE' // + item.toString()
         }
@@ -262,4 +274,3 @@ export const getUserProducts = async () => {
 
     return products;
 }
-
