@@ -1,37 +1,46 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { getCartItems, getProducts } from '../services/firebase';
+import { findCartItem, findCartItemA, getCartItems, getProducts } from '../services/firebase';
+import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
   navigation: any
   route: any
 }
 
-let cartItems: Object[] = [];
+let cartItemIds: string[] = [];
 
 const Cart = ({ navigation, route }: ScreenProps) => {
 
   const updateCartItems = async () => {
     console.log('inside updateCartItems');
-    cartItems = await getCartItems();
-    return cartItems
+    cartItemIds = await getCartItems();
+    return cartItemIds;
   }
 
-  const getItem = (item: any) => {
-    return item;
-  }
+  // const getItem = (item: any) => {
+  //   return item;
+  // }
 
   const getItemName = (item: any) => {
-    return item.item_name;
+    let itemData = findCartItemA(item, 'item_name');
+    return itemData;
   }
 
   const getPrice = (item: any) => {
-    return item.price;
+    let itemData = findCartItemA(item, 'price');
+    return itemData;
   }
 
-  const getImage = (item: any) => {
-    return item.imageURL;
+  const getImage = async (item: any) => {
+    try {
+      let itemData = await findCartItemA(item, 'imageURL');
+      return itemData;
+    } catch (e) {
+      console.log(e);
+      return '../components/image-not-found.png';
+    }
   }
 
   updateCartItems();
@@ -53,12 +62,12 @@ const Cart = ({ navigation, route }: ScreenProps) => {
     {/* List Item Real View */}
     <ScrollView>
       {/* <View> */}
-        {cartItems.map((item, i) => { return (
+        {cartItemIds.map((item, i) => { return (
           <List.Item
             title = {getItemName(item)}
             description = {getPrice(item)}
             style = {styles.listItem}
-            left = {props => <Avatar.Image size={48} source={getImage(item)}/>}
+            // left = {props => <Avatar.Image size={48} source={require(getImage(item))}/>}
           />
         )})}
       {/* </View> */}

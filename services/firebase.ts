@@ -183,7 +183,7 @@ export const getCartItems = async() => { // async(user: any) => {
     // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
     // const userID: string = user?.uid.toString()!;
     console.log('inside getCartItems lol'); // doesn't work
-    let cartItems: Object[] = [];
+    let cartItems: string[] = [];
 
     try {
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
@@ -202,9 +202,17 @@ export const getCartItems = async() => { // async(user: any) => {
         if (userSnap.exists()) {
             console.log(userSnap.data().first_name);
             console.log(userSnap.data().cart);
-            // userSnap.data().cart.forEach(function (cartItem: any) {
-            //     console.log(cartItem._key.path.segments[5], cartItem._key.path.segments[6]);
+            // userSnap.data().cart.forEach(async function (cartItem: any) {
+            //     let itemRef = doc(firestore, "products", cartItem);
+            //     let itemSnap = getDoc(itemRef);
+            //     let itemData = itemSnap.data();
+            //     cartItems.push({
+            //         item_name: itemData['item_name'],
+
+            //     })
             // });
+
+            cartItems = userSnap.data().cart;
         } else {
             console.log("No such document!");
         }
@@ -229,6 +237,40 @@ export const getCartItems = async() => { // async(user: any) => {
     }
 
     return cartItems;
+}
+
+export const findCartItemA = async (productId: string, field: string) => {
+    let productData: string = '';
+
+    try {
+        let docRef = doc(firestore, "products", productId);
+        let docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            let docData = docSnap.data();
+            productData = docData[field];
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    return productData;
+}
+
+export const findCartItem = async (productId: string) => {
+    let productData: Object[] = [];
+
+    try {
+        let docRef = doc(firestore, "products", productId);
+        let docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            let docData = docSnap.data();
+            productData.push(docData['item_name'], docData['price'], docData['imageURL']);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    return productData;
 }
 
 export const getEmail = async () => {
