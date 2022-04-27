@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dimensions, StyleProp, StyleSheet, TextInput, View, ViewProps, ViewStyle, ScrollView } from 'react-native';
 import { Avatar, BottomNavigation, Button, Card, Headline, Paragraph, Searchbar, Subheading, Text, Title } from 'react-native-paper';
 import { getProducts } from '../services/firebase';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 type ScreenProps = {
   navigation: any
@@ -10,7 +10,6 @@ type ScreenProps = {
 }
 
 let items: Object[] = [];
-
 
 const BrowseScreen = ({ route }: ScreenProps) => {
 
@@ -48,6 +47,7 @@ const BrowseScreen = ({ route }: ScreenProps) => {
   const getPrice = (item: any) => {
     return item.price;
   }
+
   const getImage = (item: any) => {
     return item.imageURL;
   }
@@ -145,15 +145,17 @@ const BrowseScreen = ({ route }: ScreenProps) => {
       
       <ScrollView>
         <View style={styles.cardView}> 
-        {items.map((item, i) => { return (
-          <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
-            <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
-            <Card.Content style={styles.cardContent}>
-              <Title>{getItemName(item)}</Title>
-              <Paragraph>${getPrice(item)}</Paragraph>
-            </Card.Content>
-          </Card>
-      )})}
+          {items.map((item, i) => {
+            console.log(getItem(item));
+            return (
+            <Card key={i} style={styles.cardStyle} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
+              <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
+              <Card.Content style={styles.cardContent}>
+                <Title>{getItemName(item)}</Title>
+                <Paragraph>${getPrice(item)}</Paragraph>
+              </Card.Content>
+            </Card>
+          )})}
         </View>
      
       </ScrollView>
