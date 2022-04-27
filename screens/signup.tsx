@@ -29,7 +29,6 @@ export default function LoginScreen({ navigation }: ScreenProps) {
           let result = await signUpWithEmail(fName, lName, email, password);
           if (result === 'success') {
             let firstName = await getEmail();
-            const user = 
             navigation.navigate("Home", {firstName: firstName});
           }
         }}/>

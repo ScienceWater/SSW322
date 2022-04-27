@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, Image, SafeAreaView, Dimensions} from "react-native";
 import { Button, Card, Headline, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { addNewProduct, addToCart } from "../services/firebase";
 
 type ScreenProps = {
   navigation: any
@@ -8,6 +9,7 @@ type ScreenProps = {
 }
 
 const ProductScreen = ({ navigation, route }: ScreenProps) => {
+
   if (route.params.product.category === "Clothing") {
 
     return (
@@ -40,7 +42,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             <Text style={styles.description}>Clothing Brand: {route.params.product.brand}</Text>
           </View>
         </ScrollView>
-        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart")}}>Add to Cart</Button>
       </SafeAreaView>
       </>
       )
@@ -82,7 +84,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
             
           </View>
         </ScrollView>
-        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+        <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart")}}>Add to Cart</Button>
       </SafeAreaView>
       </>
       )
@@ -118,7 +120,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
               <Text style={styles.description}>Course Number: {route.params.product.course_number}</Text>
             </View>
           </ScrollView>
-          <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+          <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart")}}>Add to Cart</Button>
         </SafeAreaView>
         </>
         )
@@ -159,7 +161,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
                 
               </View>
             </ScrollView>
-            <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+            <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart")}}>Add to Cart</Button>
           </SafeAreaView>
           </>
           )
@@ -195,7 +197,7 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
 
                 </View>
               </ScrollView>
-              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> navigation.navigate("Cart")}>Add to Cart</Button>
+              <Button style={styles.button} icon="cart" mode= "contained" onPress={()=> {addToCart(route.params.product), navigation.navigate("Cart")}}>Add to Cart</Button>
             </SafeAreaView>
             </>
             )

@@ -92,68 +92,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
     const input =  ev.nativeEvent.text;
     setBrand(input)
   }, [setBrand]);
-
-  const categories = [
-    {
-      label: 'Furniture',
-      value: 'furniture',
-    },
-    {
-      label: 'Books',
-      value: 'books',
-    },
-    {
-      label: 'Clothing',
-      value: 'clothing',
-    },
-    {
-      label: 'Electronics',
-      value: 'electronics',
-    },
-    {
-      label: 'Sports gear',
-      value: 'sports gear',
-    },
-  ];
-
-  const sportList = [
-    {
-      label: 'Soccer',
-      value: 'soccer',
-    },
-    {
-      label: 'Football',
-      value: 'football',
-    },
-    {
-      label: 'Hockey',
-      value: 'hockey',
-    },
-    {
-      label: 'Lacrosse',
-      value: 'lacrosse',
-    },
-    {
-      label: 'Baseball',
-      value: 'baseball',
-    },
-    {
-      label: 'Track',
-      value: 'track',
-    },
-    {
-      label: 'Curling',
-      value: 'curling',
-    },
-    {
-      label: 'Swimming',
-      value: 'swimming',
-    },
-    {
-      label: 'Other',
-      value: 'other',
-    },
-  ];
   
   const [image, setImage] = React.useState(Image.resolveAssetSource(defaultImage).uri);
 

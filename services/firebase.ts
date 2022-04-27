@@ -1,7 +1,8 @@
 import React from 'react'
+import "firebase/firestore"
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut, updateCurrentUser } from 'firebase/auth';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, doc, updateDoc, arrayUnion} from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -30,11 +31,13 @@ export const signUpWithEmail = async (fName: string, lName: string, email: strin
             displayName: fName + ' ' + lName,
         });
         console.log(user);
-        await addNewUser(fName, lName, email);
+        let userID = await addNewUser(fName, lName, email);
+        await updateProfile(user, {
+            photoURL: userID,
+        });
         return 'success'
     } catch (e) {
         console.log(e);
-       
         return e;
     }
 }
@@ -67,15 +70,20 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
         const userData = {
             first_name: fName,
             last_name: lName,
-            email: email
-
+            email: email,
+            cart: []
         }
         const docRef = await addDoc(collection(firestore, "users", ), userData);
+        await updateDoc(docRef, {
+            userID: docRef.id
+          });
         console.log(docRef.id);
+        return docRef.id
     } catch (e) {
         console.log(e);
     }
 }
+
 
 export const addNewProduct = async (
     itemName: string, Category: string, Price: string, 
@@ -157,6 +165,7 @@ export const getProducts = async (category: string, item_name: string) => {//, p
             if ((data['category'].toString() === category && data['item_name'].toString().toLowerCase().includes(item_name.toLowerCase())) ||
                 (category === '' && data['item_name'].toString().toLowerCase().includes(item_name.toLowerCase())))
             products.push({
+                productId: doc.id,
                 category: data['category'],
                 item_name: data['item_name'],
                 price: data['price'],
@@ -179,6 +188,29 @@ export const getProducts = async (category: string, item_name: string) => {//, p
         console.log(e);
     }
     return products;
+}
+
+export const addToCart = async (item: any) => {//, price: string, description: string) => {
+    let products: Object[] = [];
+    try {
+        console.log('inside try');
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        console.log(item.productId);
+        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
+        console.log("productPath: " + productPath);
+        console.log(user?.photoURL);
+        
+        if(user?.photoURL != undefined && user.photoURL != null){
+            let userRef = doc(firestore, "users", user?.photoURL);
+            await updateDoc(userRef, {
+                // cart: arrayUnion(productRef)
+                cart: arrayUnion(productPath)
+            });
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 export const getUserProducts = async () => {
