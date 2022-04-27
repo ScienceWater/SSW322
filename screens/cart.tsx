@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
-import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { emptyCart, findCartItemA, getCartItems, getProducts, markItemsSold } from '../services/firebase';
+import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Snackbar, Text, Title } from "react-native-paper";
+import { emptyCart, findCartItemA, getCartItems, getProduct, getProducts, markItemsSold, removeFromCart } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -14,11 +14,20 @@ let itemNames: string[] = [];
 let itemPrices: string[] = [];
 let itemImageURLs: string[] = [];
 
-const Cart = ({ navigation, route }: ScreenProps) => {
+const Cart = ({ route }: ScreenProps) => {
+
+  const navigation = useNavigation();
+
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   const updateCartItems = async () => {
     console.log('inside updateCartItems');
     cartItemIds = await getCartItems();
+    resetItemParams();
     cartItemIds.forEach(function (cartItem) {
       getItemName(cartItem);
       getPrice(cartItem);
@@ -27,9 +36,15 @@ const Cart = ({ navigation, route }: ScreenProps) => {
     return cartItemIds;
   }
 
-  // const getItem = (item: any) => {
-  //   return item;
-  // }
+  const resetItemParams = () => {
+    itemNames = [];
+    itemPrices = [];
+    itemImageURLs = [];
+  }
+
+  const getItem = async (item: any) => {
+    return await getProduct(item);
+  }
 
   const getItemName = async (item: any) => {
     let itemData = await findCartItemA(item, 'item_name');
@@ -62,58 +77,47 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
-    <View>
+      <View style={styles.container}>
 
-    {/* List Item Test View */}
-    {/* <ScrollView>
-      <List.Item
-        title="test product"
-        description="test product description"
-        //onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}
-        style={styles.listItem}
-        left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
-      />
-    </ScrollView> */}
+        {/* List Item Real View */}
+        <ScrollView>
+          {/* <View> */}
+            {cartItemIds.map((item, i) => { return (
+              <List.Item
+                title = {itemNames[i]}
+                description = {`$${itemPrices[i]}`}
+                style = {styles.listItem}
+                onPress = {async () => {return navigation.navigate("Product", {product: await getItem(item)})}}
+                // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
+                right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), onToggleSnackBar, console.log('Item removed from cart')}}>Remove</Button>}
+              />
+            )})}
+          {/* </View> */}
 
-    {/* List Item Real View */}
-    <ScrollView>
-      {/* <View> */}
-        {cartItemIds.map((item, i) => { return (
-          <List.Item
-            title = {itemNames[i]}
-            description = {itemPrices[i]}
-            style = {styles.listItem}
-            // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
-            // title = 'test'
-            // description = "desc"
-          />
-        )})}
-      {/* </View> */}
-    </ScrollView>
+        </ScrollView>
 
-    {/* Card Real View */}
-    {/* <ScrollView>
-        <View style={styles.cardView}>
-          {cartItems.map((item, i) => { return (
-            <Card style={styles.cardStyle} key={i} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
-              <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
-              <Card.Content style={styles.cardContent}>
-                <Title>{getItemName(item)}</Title>
-                <Paragraph>${getPrice(item)}</Paragraph>
-              </Card.Content>
-            </Card>
-          )})}
+        <View style={styles.container}>
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              label: 'Undo',
+              onPress: () => {
+                // Do something
+              },
+            }}>
+            Hey there! I'm a Snackbar.
+          </Snackbar>
         </View>
-    </ScrollView> */}
-      <FAB
-        icon="cart-arrow-up"
-        label="checkout"
-        // color="#A32638"
-        onPress={() => {markItemsSold(cartItemIds), emptyCart(), updateCartItems()}}
-        style={styles.checkoutButton}
-      />
 
-    </View>
+        <FAB
+          icon="cart-arrow-up"
+          label="checkout"
+          onPress={() => {markItemsSold(cartItemIds), emptyCart(), updateCartItems()}}
+          style={styles.checkoutButton}
+        />
+
+      </View>
     </>
   );
 }
@@ -121,9 +125,16 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 export default Cart;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 2,
+    backgroundColor: '#fff',
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
   listItem: {
     borderWidth: 5,
-    borderColor: '#A32638',
+    borderColor: '#a9a9a9',
   },
   cardView: {
     display: "flex",
@@ -152,5 +163,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 1000,
+  },
+  removeButton: {
+    backgroundColor: '#A32638',
   },
 });

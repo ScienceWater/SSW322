@@ -2,7 +2,7 @@ import React from 'react'
 import "firebase/firestore"
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut, updateCurrentUser } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc, arrayRemove } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -153,36 +153,24 @@ export const addNewProduct = async (
 // }
 
 // Second attempt at addToCart (using `cart` array field inside `user` doc)
-export const addToCart = async (item: any) => {
-    console.log('inside addToCart');
-    console.log('item: ' + item);
-    console.log('item.id: ' + item.id);
-    console.log('item.data(): ' + item.data);
-    console.log('item.item_name: ' + item.item_name);
-    console.log('item.path: ' + item.path);
-
+export const addToCart = async (item: any) => {//, price: string, description: string) => {
+    let products: Object[] = [];
     try {
         console.log('inside try');
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
         const q = query(collection(firestore, "users"), where("email", "==", user?.email));
-        let userDocId: string = '';
-
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
-            userDocId = doc.id as string;
-        });
-        let userRef = doc(firestore, "users", userDocId);
-        // let userRef = doc(firestore, "users", user?.userID);
-        // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
-        let productPath = item.productId; // Edited to get actual product path
+        console.log(item.productId);
+        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
         console.log("productPath: " + productPath);
-
-        // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
-        await updateDoc(userRef, {
-            // cart: arrayUnion(productRef)
-            cart: arrayUnion(productPath)
-        });
+        console.log(user?.photoURL);
+        
+        if(user?.photoURL != undefined && user.photoURL != null){
+            let userRef = doc(firestore, "users", user?.photoURL);
+            await updateDoc(userRef, {
+                // cart: arrayUnion(productRef)
+                cart: arrayUnion(productPath)
+            });
+        }
     } catch (e) {
         console.log(e);
     }
@@ -317,6 +305,7 @@ export const getFirstName = async () => {
     return name_one;
 }
 
+// Gets all products of the specified category and item_name
 export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
@@ -354,29 +343,42 @@ export const getProducts = async (category: string, item_name: string) => {//, p
     return products;
 }
 
-export const addToCart = async (item: any) => {//, price: string, description: string) => {
-    let products: Object[] = [];
+// Gets a single product by it's ID and returns and Object with all fields
+export const getProduct = async (productId: string) => {
+    let productData: Object = {};
+
     try {
-        console.log('inside try');
-        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
-        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
-        console.log(item.productId);
-        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
-        console.log("productPath: " + productPath);
-        console.log(user?.photoURL);
-        
-        if(user?.photoURL != undefined && user.photoURL != null){
-            let userRef = doc(firestore, "users", user?.photoURL);
-            await updateDoc(userRef, {
-                // cart: arrayUnion(productRef)
-                cart: arrayUnion(productPath)
-            });
+        let docRef = doc(firestore, "products", productId);
+        let docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            let data = docSnap.data();
+            productData = {
+                productId: docSnap.id,
+                category: data['category'],
+                item_name: data['item_name'],
+                price: data['price'],
+                description: data['description'],
+                Color: data['Color'],
+                dimensions: data.dimensions,
+                weight: data['weight'],
+                size: data['Size'],
+                course_number: data['CourseNumber'],
+                serial: data['Serial'],
+                imageURL: data['imageURL'],
+                brand: data['Brand'],
+                isbn: data['ISBN'],
+                author: data['Author'],
+                sport: data['Sport'],
+            }
         }
     } catch (e) {
         console.log(e);
     }
+  
+    return productData;
 }
 
+// Gets all products being sold by a user
 export const getUserProducts = async () => {
     let products: Object[] = [];
     let email = await getEmail();
@@ -457,3 +459,26 @@ export const markItemsSold = async (cartItems: string[]) => {
 }
 
 // Notify buyer and sellers
+
+// Remove individual item from cart
+export const removeFromCart = async (productId: string) => {
+    try {
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
+            userDocId = doc.id as string;
+        });
+        let userRef = doc(firestore, "users", userDocId);
+
+        updateDoc(userRef, {
+            // (https://firebase.google.com/docs/reference/node/firebase.firestore.FieldValue#static-arrayremove)
+            cart: arrayRemove(productId)
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
