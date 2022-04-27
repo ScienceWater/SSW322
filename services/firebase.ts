@@ -312,6 +312,7 @@ export const getFirstName = async () => {
     return name_one;
 }
 
+// Gets all products of the specified category and item_name
 export const getProducts = async (category: string, item_name: string) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
@@ -349,6 +350,42 @@ export const getProducts = async (category: string, item_name: string) => {//, p
     return products;
 }
 
+// Gets a single product by it's ID and returns and Object with all fields
+export const getProduct = async (productId: string) => {
+    let productData: Object = {};
+
+    try {
+        let docRef = doc(firestore, "products", productId);
+        let docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            let data = docSnap.data();
+            productData = {
+                productId: docSnap.id,
+                category: data['category'],
+                item_name: data['item_name'],
+                price: data['price'],
+                description: data['description'],
+                Color: data['Color'],
+                dimensions: data.dimensions,
+                weight: data['weight'],
+                size: data['Size'],
+                course_number: data['CourseNumber'],
+                serial: data['Serial'],
+                imageURL: data['imageURL'],
+                brand: data['Brand'],
+                isbn: data['ISBN'],
+                author: data['Author'],
+                sport: data['Sport'],
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    return productData;
+}
+
+// Gets all products being sold by a user
 export const getUserProducts = async () => {
     let products: Object[] = [];
     let email = await getEmail();

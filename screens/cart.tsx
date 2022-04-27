@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { emptyCart, findCartItemA, getCartItems, getProducts, markItemsSold, removeFromCart } from '../services/firebase';
+import { emptyCart, findCartItemA, getCartItems, getProduct, getProducts, markItemsSold, removeFromCart } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -14,17 +14,30 @@ let itemNames: string[] = [];
 let itemPrices: string[] = [];
 let itemImageURLs: string[] = [];
 
-const Cart = ({ navigation, route }: ScreenProps) => {
+const Cart = ({ route }: ScreenProps) => {
+
+  const navigation = useNavigation();
 
   const updateCartItems = async () => {
     console.log('inside updateCartItems');
     cartItemIds = await getCartItems();
+    resetItemParams();
     cartItemIds.forEach(function (cartItem) {
       getItemName(cartItem);
       getPrice(cartItem);
       getImage(cartItem);
     });
     return cartItemIds;
+  }
+
+  const resetItemParams = () => {
+    itemNames = [];
+    itemPrices = [];
+    itemImageURLs = [];
+  }
+
+  const getItem = async (item: any) => {
+    return await getProduct(item);
   }
 
   const getItemName = async (item: any) => {
@@ -68,6 +81,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
                 title = {itemNames[i]}
                 description = {`$${itemPrices[i]}`}
                 style = {styles.listItem}
+                onPress = {async () => {return navigation.navigate("Product", {product: await getItem(item)})}}
                 // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
                 right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
               />
