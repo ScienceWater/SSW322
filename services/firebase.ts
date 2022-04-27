@@ -1,6 +1,7 @@
 import React from 'react'
+import "firebase/firestore"
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut, updateCurrentUser } from 'firebase/auth';
 import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc, arrayRemove } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
@@ -30,11 +31,13 @@ export const signUpWithEmail = async (fName: string, lName: string, email: strin
             displayName: fName + ' ' + lName,
         });
         console.log(user);
-        await addNewUser(fName, lName, email);
+        let userID = await addNewUser(fName, lName, email);
+        await updateProfile(user, {
+            photoURL: userID,
+        });
         return 'success'
     } catch (e) {
         console.log(e);
-       
         return e;
     }
 }
@@ -75,10 +78,12 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
             userID: docRef.id,
         });
         console.log(docRef.id);
+        return docRef.id
     } catch (e) {
         console.log(e);
     }
 }
+
 
 export const addNewProduct = async (
     itemName: string, Category: string, Price: string, 
@@ -148,36 +153,24 @@ export const addNewProduct = async (
 // }
 
 // Second attempt at addToCart (using `cart` array field inside `user` doc)
-export const addToCart = async (item: any) => {
-    console.log('inside addToCart');
-    console.log('item: ' + item);
-    console.log('item.id: ' + item.id);
-    console.log('item.data(): ' + item.data);
-    console.log('item.item_name: ' + item.item_name);
-    console.log('item.path: ' + item.path);
-
+export const addToCart = async (item: any) => {//, price: string, description: string) => {
+    let products: Object[] = [];
     try {
         console.log('inside try');
         // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
         const q = query(collection(firestore, "users"), where("email", "==", user?.email));
-        let userDocId: string = '';
-
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
-            userDocId = doc.id as string;
-        });
-        let userRef = doc(firestore, "users", userDocId);
-        // let userRef = doc(firestore, "users", user?.userID);
-        // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
-        let productPath = item.productId; // Edited to get actual product path
+        console.log(item.productId);
+        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
         console.log("productPath: " + productPath);
-
-        // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
-        await updateDoc(userRef, {
-            // cart: arrayUnion(productRef)
-            cart: arrayUnion(productPath)
-        });
+        console.log(user?.photoURL);
+        
+        if(user?.photoURL != undefined && user.photoURL != null){
+            let userRef = doc(firestore, "users", user?.photoURL);
+            await updateDoc(userRef, {
+                // cart: arrayUnion(productRef)
+                cart: arrayUnion(productPath)
+            });
+        }
     } catch (e) {
         console.log(e);
     }
@@ -381,7 +374,7 @@ export const getProduct = async (productId: string) => {
     } catch (e) {
         console.log(e);
     }
-
+  
     return productData;
 }
 

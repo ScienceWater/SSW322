@@ -92,68 +92,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
     const input =  ev.nativeEvent.text;
     setBrand(input)
   }, [setBrand]);
-
-  const categories = [
-    {
-      label: 'Furniture',
-      value: 'furniture',
-    },
-    {
-      label: 'Books',
-      value: 'books',
-    },
-    {
-      label: 'Clothing',
-      value: 'clothing',
-    },
-    {
-      label: 'Electronics',
-      value: 'electronics',
-    },
-    {
-      label: 'Sports gear',
-      value: 'sports gear',
-    },
-  ];
-
-  const sportList = [
-    {
-      label: 'Soccer',
-      value: 'soccer',
-    },
-    {
-      label: 'Football',
-      value: 'football',
-    },
-    {
-      label: 'Hockey',
-      value: 'hockey',
-    },
-    {
-      label: 'Lacrosse',
-      value: 'lacrosse',
-    },
-    {
-      label: 'Baseball',
-      value: 'baseball',
-    },
-    {
-      label: 'Track',
-      value: 'track',
-    },
-    {
-      label: 'Curling',
-      value: 'curling',
-    },
-    {
-      label: 'Swimming',
-      value: 'swimming',
-    },
-    {
-      label: 'Other',
-      value: 'other',
-    },
-  ];
   
   const [image, setImage] = React.useState(Image.resolveAssetSource(defaultImage).uri);
 
@@ -228,7 +166,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               mode="outlined"
               activeOutlineColor='#A32638'
               style={styles.textInput} 
-              keyboardType = 'numeric'
               onEndEditing={handleInputColor}
               defaultValue={Color}
           />
@@ -246,44 +183,6 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               onEndEditing={handleInputSerial}
               defaultValue={Serial}
           />
-          <TextInput
-              label="Weight"
-              mode="outlined"
-              activeOutlineColor='#A32638'
-              style={styles.textInput} 
-              keyboardType = 'numeric'
-              onEndEditing={handleInputWeight}
-              defaultValue={Weight}
-          />
-          <View  style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}} >
-            <TextInput
-                label="Width"
-                mode="outlined"
-                activeOutlineColor='#A32638'
-                style={styles.textInput} 
-                keyboardType = 'numeric'
-                defaultValue={Width}
-                onEndEditing={ handleInputWidth }
-            />
-            <TextInput
-                label="Height"
-                mode="outlined"
-                activeOutlineColor='#A32638'
-                style={styles.textInput} 
-                keyboardType = 'numeric'
-                defaultValue={Height} 
-                onEndEditing={handleInputHeight}
-            />
-            <TextInput
-                label="Depth"
-                mode="outlined"
-                activeOutlineColor='#A32638'
-                style={styles.textInput} 
-                keyboardType = 'numeric'
-                defaultValue={Depth} 
-                onEndEditing={handleInputDepth}
-            />
-          </View>
         </>
       );
     }
@@ -302,8 +201,7 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
             label="Color"
             mode="outlined"
             activeOutlineColor='#A32638'
-            style={styles.textInput} 
-            keyboardType = 'numeric'
+            style={styles.textInput}
             onEndEditing={handleInputColor}
             defaultValue={Color}
           />
@@ -326,8 +224,7 @@ export default function AddProductScreen({ navigation, route }: ScreenProps) {
               label="Sport"
               mode="outlined"
               activeOutlineColor='#A32638'
-              style={styles.textInput} 
-              keyboardType = 'numeric'
+              style={styles.textInput}
               defaultValue={Sport} 
               onEndEditing={handleInputSport}
           />
