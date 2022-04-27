@@ -193,6 +193,13 @@ const ProductScreen = ({ navigation, route }: ScreenProps) => {
         </SafeAreaView>
       </>
     )
+  } else {
+
+    return (
+      <>
+        <Text>Product not found :(</Text>
+      </>
+    )
   }
 }
 
