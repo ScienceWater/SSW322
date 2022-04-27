@@ -10,7 +10,7 @@ import ChooseCateg from './chooseCateg';
 const HomeRoute = () => <BrowseScreen navigation={undefined} route={undefined} />;
 const CartRoute = () => <Cart navigation={undefined} route={undefined}/>;
 const SellRoute = () => <PostingsScreen navigation={undefined} route={undefined} />;
-const ListProductRoute = () => <ChooseCateg />;
+// const ListProductRoute = () => <ChooseCateg />;
 const AccountRoute = () => <Account/>;
 
 type ScreenProps = {
@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     { key: 'home', title: 'Home', icon: 'home' },
     { key: 'cart', title: 'Cart', icon: 'cart' },
     { key: 'sell', title: 'Sell', icon: 'store'},
-    { key: 'listItem', title: 'List Item', icon: 'plus-box-outline'},
+    // { key: 'listItem', title: 'List Item', icon: 'plus-box-outline'},
     { key: 'account', title: 'Account', icon: 'account' },
   ]);
   const email = route.params.usersEmail
@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation, route }: ScreenProps) => {
     home: HomeRoute,
     cart: CartRoute,
     sell: SellRoute,
-    listItem: ListProductRoute,
+    // listItem: ListProductRoute,
     account: AccountRoute,
   });
 
