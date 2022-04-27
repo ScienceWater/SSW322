@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { emptyCart, findCartItemA, getCartItems, getProducts, markItemsSold } from '../services/firebase';
+import { emptyCart, findCartItemA, getCartItems, getProducts, markItemsSold, removeFromCart } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -84,6 +84,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
             description = {itemPrices[i]}
             style = {styles.listItem}
             // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
+            right = {props => <Button icon="trash-can-outline" mode="contained" onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
             // title = 'test'
             // description = "desc"
           />

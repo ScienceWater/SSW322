@@ -1,7 +1,7 @@
 import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc, arrayRemove } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -429,3 +429,26 @@ export const markItemsSold = async (cartItems: string[]) => {
 }
 
 // Notify buyer and sellers
+
+// Remove individual item from cart
+export const removeFromCart = async (productId: string) => {
+    try {
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
+            userDocId = doc.id as string;
+        });
+        let userRef = doc(firestore, "users", userDocId);
+
+        updateDoc(userRef, {
+            // (https://firebase.google.com/docs/reference/node/firebase.firestore.FieldValue#static-arrayremove)
+            cart: arrayRemove(productId)
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
