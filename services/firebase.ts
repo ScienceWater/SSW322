@@ -1,7 +1,7 @@
 import React from 'react'
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference } from 'firebase/firestore';
+import { getFirestore, addDoc, collection, query, where, getDocs, DocumentSnapshot, getDoc, doc, updateDoc, arrayUnion, DocumentReference, setDoc } from 'firebase/firestore';
 import Constants from 'expo-constants';
 import 'firebase/auth'
 import { getStorage, ref, uploadString } from "firebase/storage";
@@ -71,6 +71,9 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
             cart: [],
         }
         const docRef = await addDoc(collection(firestore, "users", ), userData);
+        await updateDoc(docRef, {
+            userID: docRef.id,
+        });
         console.log(docRef.id);
     } catch (e) {
         console.log(e);
@@ -165,8 +168,9 @@ export const addToCart = async (item: any) => {
             userDocId = doc.id as string;
         });
         let userRef = doc(firestore, "users", userDocId);
+        // let userRef = doc(firestore, "users", user?.userID);
         // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
-        let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
+        let productPath = item.productId; // Edited to get actual product path
         console.log("productPath: " + productPath);
 
         // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
@@ -375,3 +379,49 @@ export const getUserProducts = async () => {
 
     return products;
 }
+
+// Checkout (contains clear cart, mark cart items sold, and notify buyer and sellers)
+
+// Clear cart
+export const emptyCart = async () => {
+    try {
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
+            userDocId = doc.id as string;
+        });
+        let userRef = doc(firestore, "users", userDocId);
+
+        // Set `cart` field inside `user` doc to empty array (https://firebase.google.com/docs/firestore/manage-data/add-data#set_a_document)
+        await updateDoc(userRef, {
+            cart: [],
+        });
+        console.log('Cart emptied!');
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+// Mark cart items sold
+export const markItemsSold = async (cartItems: string[]) => {
+    try {
+        cartItems.forEach(function (item) {
+            let itemRef = doc(firestore, "products", item);
+            // let itemSnap = await getDoc(itemRef);
+            // if (itemSnap.exists()) {
+            //     let itemData = itemSnap.data();
+            updateDoc(itemRef, {
+                sold: true
+            })
+            // }
+        })
+    } catch (e) {
+
+    }
+}
+
+// Notify buyer and sellers

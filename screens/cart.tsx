@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
-import { Avatar, Button, Card, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { findCartItemA, getCartItems, getProducts } from '../services/firebase';
+import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { emptyCart, findCartItemA, getCartItems, getProducts } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -62,6 +62,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
+    <View>
 
     {/* List Item Test View */}
     {/* <ScrollView>
@@ -104,7 +105,15 @@ const Cart = ({ navigation, route }: ScreenProps) => {
           )})}
         </View>
     </ScrollView> */}
+      <FAB
+        icon="cart-arrow-up"
+        label="checkout"
+        // color="#A32638"
+        onPress={() => {emptyCart(), updateCartItems()}}
+        style={styles.checkoutButton}
+      />
 
+    </View>
     </>
   );
 }
@@ -135,5 +144,13 @@ const styles = StyleSheet.create({
   },
   cardContent: {
       padding: 5
+  },
+  checkoutButton: {
+    backgroundColor: "#A32638",
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
   },
 });
