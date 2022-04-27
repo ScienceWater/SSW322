@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
-import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
+import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Snackbar, Text, Title } from "react-native-paper";
 import { emptyCart, findCartItemA, getCartItems, getProduct, getProducts, markItemsSold, removeFromCart } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,6 +17,12 @@ let itemImageURLs: string[] = [];
 const Cart = ({ route }: ScreenProps) => {
 
   const navigation = useNavigation();
+
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   const updateCartItems = async () => {
     console.log('inside updateCartItems');
@@ -83,11 +89,26 @@ const Cart = ({ route }: ScreenProps) => {
                 style = {styles.listItem}
                 onPress = {async () => {return navigation.navigate("Product", {product: await getItem(item)})}}
                 // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
-                right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
+                right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), onToggleSnackBar, console.log('Item removed from cart')}}>Remove</Button>}
               />
             )})}
           {/* </View> */}
+
         </ScrollView>
+
+        <View style={styles.container}>
+          <Snackbar
+            visible={visible}
+            onDismiss={onDismissSnackBar}
+            action={{
+              label: 'Undo',
+              onPress: () => {
+                // Do something
+              },
+            }}>
+            Hey there! I'm a Snackbar.
+          </Snackbar>
+        </View>
 
         <FAB
           icon="cart-arrow-up"
