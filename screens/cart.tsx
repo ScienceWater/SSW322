@@ -27,10 +27,6 @@ const Cart = ({ navigation, route }: ScreenProps) => {
     return cartItemIds;
   }
 
-  // const getItem = (item: any) => {
-  //   return item;
-  // }
-
   const getItemName = async (item: any) => {
     let itemData = await findCartItemA(item, 'item_name');
     console.log("getItemName: " + itemData);
@@ -62,59 +58,31 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 
   return (
     <>
-    <View>
+      <View style={styles.container}>
 
-    {/* List Item Test View */}
-    {/* <ScrollView>
-      <List.Item
-        title="test product"
-        description="test product description"
-        //onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}
-        style={styles.listItem}
-        left = {props => <Avatar.Image size={48} source={require('../components/image-not-found.png')}/>}
-      />
-    </ScrollView> */}
+        {/* List Item Real View */}
+        <ScrollView>
+          {/* <View> */}
+            {cartItemIds.map((item, i) => { return (
+              <List.Item
+                title = {itemNames[i]}
+                description = {`$${itemPrices[i]}`}
+                style = {styles.listItem}
+                // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
+                right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
+              />
+            )})}
+          {/* </View> */}
+        </ScrollView>
 
-    {/* List Item Real View */}
-    <ScrollView>
-      {/* <View> */}
-        {cartItemIds.map((item, i) => { return (
-          <List.Item
-            title = {itemNames[i]}
-            description = {`$${itemPrices[i]}`}
-            style = {styles.listItem}
-            // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
-            right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
-            // title = 'test'
-            // description = "desc"
-          />
-        )})}
-      {/* </View> */}
-    </ScrollView>
+        <FAB
+          icon="cart-arrow-up"
+          label="checkout"
+          onPress={() => {markItemsSold(cartItemIds), emptyCart(), updateCartItems()}}
+          style={styles.checkoutButton}
+        />
 
-    {/* Card Real View */}
-    {/* <ScrollView>
-        <View style={styles.cardView}>
-          {cartItems.map((item, i) => { return (
-            <Card style={styles.cardStyle} key={i} onPress={()=>{return navigation.navigate("Product", {product: getItem(item)})}}>
-              <Card.Cover style={styles.cardCoverStyle} source={{ uri: getImage(item) }} />
-              <Card.Content style={styles.cardContent}>
-                <Title>{getItemName(item)}</Title>
-                <Paragraph>${getPrice(item)}</Paragraph>
-              </Card.Content>
-            </Card>
-          )})}
-        </View>
-    </ScrollView> */}
-      <FAB
-        icon="cart-arrow-up"
-        label="checkout"
-        // color="#A32638"
-        onPress={() => {markItemsSold(cartItemIds), emptyCart(), updateCartItems()}}
-        style={styles.checkoutButton}
-      />
-
-    </View>
+      </View>
     </>
   );
 }
@@ -122,6 +90,13 @@ const Cart = ({ navigation, route }: ScreenProps) => {
 export default Cart;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 2,
+    backgroundColor: '#fff',
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
   listItem: {
     borderWidth: 5,
     borderColor: '#a9a9a9',
@@ -156,6 +131,5 @@ const styles = StyleSheet.create({
   },
   removeButton: {
     backgroundColor: '#A32638',
-    textAlignVertical: 'center',
   },
 });
