@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ScrollView, TouchableOpacity, StyleSheet, ActionSheetIOS, View } from "react-native";
 import { Avatar, Button, Card, FAB, Headline, List, Modal, Paragraph, Portal, Provider, Text, Title } from "react-native-paper";
-import { emptyCart, findCartItemA, getCartItems, getProducts } from '../services/firebase';
+import { emptyCart, findCartItemA, getCartItems, getProducts, markItemsSold } from '../services/firebase';
 import { useNavigation } from '@react-navigation/native';
 
 type ScreenProps = {
@@ -109,7 +109,7 @@ const Cart = ({ navigation, route }: ScreenProps) => {
         icon="cart-arrow-up"
         label="checkout"
         // color="#A32638"
-        onPress={() => {emptyCart(), updateCartItems()}}
+        onPress={() => {markItemsSold(cartItemIds), emptyCart(), updateCartItems()}}
         style={styles.checkoutButton}
       />
 

@@ -409,18 +409,22 @@ export const emptyCart = async () => {
 // Mark cart items sold
 export const markItemsSold = async (cartItems: string[]) => {
     try {
-        cartItems.forEach(function (item) {
+        cartItems.forEach(async function (item) {
             let itemRef = doc(firestore, "products", item);
-            // let itemSnap = await getDoc(itemRef);
-            // if (itemSnap.exists()) {
-            //     let itemData = itemSnap.data();
-            updateDoc(itemRef, {
-                sold: true
-            })
-            // }
-        })
+            let itemSnap = await getDoc(itemRef);
+            if (itemSnap.exists()) {
+                let itemData = itemSnap.data();
+                if (itemData['sold'] == false) {
+                    updateDoc(itemRef, {
+                        sold: true
+                    });
+                } else {
+                    console.log('Item already sold!');
+                }
+            }
+        });
     } catch (e) {
-
+        console.log(e);
     }
 }
 
