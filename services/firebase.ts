@@ -123,36 +123,7 @@ export const addNewProduct = async (
     }
 }
 
-// First attempt at addToCart (using `cart` collection inside `user` doc)
-// export const addToCart = async(item: any) => {
-//     console.log('inside addToCart');
-//     const q = query(collection(firestore, "users"), where("email", "==", user));
-//     console.log('inside addToCart');
-//     const querySnapshot = await getDocs(q);
-//     console.log('inside addToCart');
-//     let userID = '';
-//     console.log('inside addToCart');
-//     querySnapshot.forEach((doc) => {
-//         userID = doc.id;
-//         console.log('inside addToCart');
-//     });
-//     // uses non-null assertion operator `!` (https://stackoverflow.com/questions/54496398/typescript-type-string-undefined-is-not-assignable-to-type-string)
-//     // const userID: string = user?.uid.toString()!;
-    
-//     console.log('userID' + userID);
-//     try {
-//         // const arbit = .collection('users'))
-//         const cartItemData = {
-//             ref: '/products/Kv90wavhhLpaDw0FdBrE' // + item.toString()
-//         }
-//         const docRef = await addDoc(collection(firestore, "users", userID, "cart"), cartItemData);
-//         console.log(docRef.id);  
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }
-
-// Second attempt at addToCart (using `cart` array field inside `user` doc)
+// (Andrew's) Second attempt at addToCart (using `cart` array field inside `user` doc)
 export const addToCart = async (item: any) => {
     console.log('inside addToCart');
     console.log('item: ' + item);
@@ -188,7 +159,7 @@ export const addToCart = async (item: any) => {
     }
 }
 
-// Seb's attempt at addToCart (apparantly worked for him on mobile but definitely does not work for me on web)
+// Seb's attempt at addToCart (apparantly worked for him on mobile but definitely does not work for me (Andrew) on web)
 export const addToCartSeb = async (item: any) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
