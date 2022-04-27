@@ -81,10 +81,10 @@ const Cart = ({ navigation, route }: ScreenProps) => {
         {cartItemIds.map((item, i) => { return (
           <List.Item
             title = {itemNames[i]}
-            description = {itemPrices[i]}
+            description = {`$${itemPrices[i]}`}
             style = {styles.listItem}
             // left = {props => <Avatar.Image size={48} source={itemImageURLs[i]}/>}
-            right = {props => <Button icon="trash-can-outline" mode="contained" onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
+            right = {props => <Button icon="trash-can-outline" mode="contained" style={styles.removeButton} onPress={() => {removeFromCart(item), updateCartItems(), console.log('Item removed from cart')}}>Remove</Button>}
             // title = 'test'
             // description = "desc"
           />
@@ -124,7 +124,7 @@ export default Cart;
 const styles = StyleSheet.create({
   listItem: {
     borderWidth: 5,
-    borderColor: '#A32638',
+    borderColor: '#a9a9a9',
   },
   cardView: {
     display: "flex",
@@ -153,5 +153,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 1000,
+  },
+  removeButton: {
+    backgroundColor: '#A32638',
+    textAlignVertical: 'center',
   },
 });
