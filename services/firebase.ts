@@ -153,7 +153,43 @@ export const addNewProduct = async (
 // }
 
 // Second attempt at addToCart (using `cart` array field inside `user` doc)
-export const addToCart = async (item: any) => {//, price: string, description: string) => {
+export const addToCart = async (item: any) => {
+    console.log('inside addToCart');
+    console.log('item: ' + item);
+    console.log('item.id: ' + item.id);
+    console.log('item.data(): ' + item.data);
+    console.log('item.item_name: ' + item.item_name);
+    console.log('item.path: ' + item.path);
+
+    try {
+        console.log('inside try');
+        // Get `user` doc with specified `email` field (https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection)
+        const q = query(collection(firestore, "users"), where("email", "==", user?.email));
+        let userDocId: string = '';
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // Cast `userDocId` to `string` type (https://stackoverflow.com/questions/37978528/typescript-type-string-is-not-assignable-to-type)
+            userDocId = doc.id as string;
+        });
+        let userRef = doc(firestore, "users", userDocId);
+        // let userRef = doc(firestore, "users", user?.userID);
+        // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
+        let productPath = item.productId; // Edited to get actual product path
+        console.log("productPath: " + productPath);
+
+        // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
+        await updateDoc(userRef, {
+            // cart: arrayUnion(productRef)
+            cart: arrayUnion(productPath)
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+// Seb's attempt at addToCart (apparantly worked for him on mobile but definitely does not work for me on web)
+export const addToCartSeb = async (item: any) => {//, price: string, description: string) => {
     let products: Object[] = [];
     try {
         console.log('inside try');
