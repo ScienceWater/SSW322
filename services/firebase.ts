@@ -67,8 +67,8 @@ const addNewUser = async (fName: string, lName: string, email: string) => {
         const userData = {
             first_name: fName,
             last_name: lName,
-            email: email
-
+            email: email,
+            cart: [],
         }
         const docRef = await addDoc(collection(firestore, "users", ), userData);
         console.log(docRef.id);
@@ -167,6 +167,7 @@ export const addToCart = async (item: any) => {
         let userRef = doc(firestore, "users", userDocId);
         // let productRef = doc(firestore, "products", "dOtUbCdfkyizkDsBgO6C");
         let productPath = item.productId; // 'dOtUbCdfkyizkDsBgO6C'; // Edit to get actual product path
+        console.log("productPath: " + productPath);
 
         // Update `cart` field inside `user` doc (https://firebase.google.com/docs/firestore/manage-data/add-data#update_elements_in_an_array)
         await updateDoc(userRef, {
